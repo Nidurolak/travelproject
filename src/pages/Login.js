@@ -1,27 +1,52 @@
 import React from "react";
 import styled from "styled-components";
+import { QueryClient, useMutation, useQuery } from 'react-query';
+import { useState } from 'react';
+import { login } from "../api/Login";
+import { async } from "q";
 // import { useQuery } from "react-query";
 // import { login } from "../api/login";
 
 function Login() {
-  //   const { isLoading, error, data } = useQuery("login", () =>
-  //     login("userid", "password")
-  //   );
+  const [username, setusername] = useState("")
+  const [password, setuserpassword] = useState("")
 
-  //   if (isLoading) return "Loading...";
+  const userIDChange = (event) => {
+    setusername(event.target.value);
+  };
+  const userPassWordChange = (event) => {
+    setuserpassword(event.target.value);
+  };
 
-  //   if (error) return "An error has occurred: " + error.message;
+  const mutate = useMutation(login)
+
+  const CheckLogin = async (event) => {
+
+    console.log("adasasd")
+    event.preventDefault();
+    console.log("zzzzzzz")
+    const data = {
+      username,
+      password
+    }
+    console.log("hjhhhhghfgh")
+    
+     const res = await mutate.mutateAsync(data)
+     console.log("jjjjjjjjjjjjjjjj")
+  }
 
   return (
     <LoginContainer>
-      <LoginForm>
-        <LoginTitle>로그인ID</LoginTitle>
-        <Input type="text" placeholder="ID" />
-        <LoginTitle>비밀번호</LoginTitle>
-        <Input type="password" placeholder="Password" />
-        <>비밀번호 혹은 ID가 일치하지 않습니다</>
-        <LoginButton>로그인하기</LoginButton>
-      </LoginForm>
+      <form onSubmit={CheckLogin}>
+        <LoginForm>
+          <LoginTitle>로그인ID</LoginTitle>
+          <Input type="text" placeholder="ID" onChange={userIDChange} maxLength={10}/>
+          <LoginTitle>비밀번호</LoginTitle>
+          <Input type="password" placeholder="Password"  onChange={userPassWordChange}/>
+          <>비밀번호 혹은 ID가 일치하지 않습니다</>
+          <LoginButton>로그인하기</LoginButton>
+        </LoginForm>
+      </form>
     </LoginContainer>
   );
 }
@@ -35,7 +60,7 @@ const LoginContainer = styled.div`
   height: 100vh;
 `;
 
-const LoginForm = styled.form`
+const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
