@@ -1,7 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+// import { useQuery } from "react-query";
+// import { login } from "../api/login";
 
 function Login() {
+  //   const { isLoading, error, data } = useQuery("login", () =>
+  //     login("userid", "password")
+  //   );
+
+  //   if (isLoading) return "Loading...";
+
+  //   if (error) return "An error has occurred: " + error.message;
+
   return (
     <LoginContainer>
       <LoginForm>
