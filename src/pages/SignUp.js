@@ -1,54 +1,75 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from 'react';
-
+import { useState } from "react";
+import { useMutation } from "react-query";
+import { signup } from "../api/SignUp";
+import { useNavigate } from "react-router-dom";
 function Signup() {
-  const [username, setusername] = useState("")
-  const [password, setuserpassword] = useState("")
-  const [usernickname, setusernickname] = useState("")
-
+  const [username, setusername] = useState("");
+  const [password, setuserpassword] = useState("");
+  const [nickname, setnickname] = useState("");
+  const navi = useNavigate();
   const userIDChange = (event) => {
     setusername(event.target.value);
   };
   const userPassWordChange = (event) => {
     setuserpassword(event.target.value);
   };
-  const userNicknameChange = (event) => {
-    setusernickname(event.target.value);
+  const nicknameChange = (event) => {
+    setnickname(event.target.value);
   };
 
-  const CheckSignUp = async (event) => {
+  const mutate = useMutation(signup);
 
+  const CheckSignUp = async (event) => {
     event.preventDefault();
     const data = {
       username,
       password,
-      usernickname,
+      nickname,
+    };
+    console.log(data);
+
+    try {
+      const res = await mutate.mutateAsync(data);
+      console.log(res);
+      const { status, message } = res.data;
+      console.log(status);
+      console.log(message);
+      if (status == true) {
+        window.alert("회원가입성공!");
+        navi("/");
+      }
+    } catch (error) {
+      window.alert("회원가입 실패");
+      console.log(error);
     }
-    console.log(data)
-
-    try
-  }
-
-
-
+    console.log("jjjjjjjjjjjjjjjj");
+  };
 
   return (
     <SignupContainer>
       <form onSubmit={CheckSignUp}>
-      <SignupForm>
-        <SignupTitle>회원가입</SignupTitle>
-        <Input type="text" placeholder="회원가입 ID"  onChange={userIDChange}/>
-        <Input type="password" placeholder="비밀번호"  onChange={userPassWordChange}/>
-        <Input type="text" placeholder="닉네임"  onChange={userNicknameChange}/>
-        <>ID는 6~14글자 사이여야 합니다</>
-        <SignupButton>가입하기</SignupButton>
-      </SignupForm>
+        <SignupForm>
+          <SignupTitle>회원가입</SignupTitle>
+          <Input
+            type="text"
+            placeholder="회원가입 ID"
+            onChange={userIDChange}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            onChange={userPassWordChange}
+          />
+          <Input type="text" placeholder="닉네임" onChange={nicknameChange} />
+          <>ID는 6~14글자 사이여야 합니다</>
+          <SignupButton>가입하기</SignupButton>
+        </SignupForm>
       </form>
     </SignupContainer>
   );
 }
-
 export default Signup;
 
 const SignupContainer = styled.div`
