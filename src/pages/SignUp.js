@@ -4,30 +4,49 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { signup } from "../api/SignUp";
 import { useNavigate } from "react-router-dom";
+
 function Signup() {
   const [username, setusername] = useState("");
   const [password, setuserpassword] = useState("");
   const [nickname, setnickname] = useState("");
   const navi = useNavigate();
+
+  // 아이디 입력 시 이벤트
   const userIDChange = (event) => {
     setusername(event.target.value);
   };
+
+  // 비밀번호 입력 시 이벤트
   const userPassWordChange = (event) => {
     setuserpassword(event.target.value);
   };
+
+  // 닉네임 입력 시 이벤트
   const nicknameChange = (event) => {
     setnickname(event.target.value);
   };
 
-  const mutate = useMutation(signup);
+  // 회원가입 요청 처리 함수
+  const mutate = useMutation(signup, {
+    onError: (error) => {
+      if (error.response.status === 409) {
+        window.alert("중복된 아이디나 닉네임이 있습니다.");
+      } else {
+        window.alert("회원가입 실패");
+        console.log(error);
+      }
+    },
+  });
 
   const CheckSignUp = async (event) => {
     event.preventDefault();
+
     const data = {
       username,
       password,
       nickname,
     };
+
     console.log(data);
 
     try {
@@ -36,15 +55,16 @@ function Signup() {
       const { status, message } = res.data;
       console.log(status);
       console.log(message);
-      if (status == true) {
-        window.alert("회원가입성공!");
+      if (status === true) {
+        window.alert("회원가입 성공!");
         navi("/");
+      } else {
+        window.alert(message);
       }
     } catch (error) {
-      window.alert("회원가입 실패");
+      window.alert("아이디나 닉네임이 중복됩니다");
       console.log(error);
     }
-    console.log("jjjjjjjjjjjjjjjj");
   };
 
   return (
