@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 function Login() {
   const [username, setusername] = useState("")
   const [password, setuserpassword] = useState("")
-  const [cookie, setCookie] = useCookies(['id'])
+  const [cookie, setCookie] = useCookies(['wow'])
   const navi =useNavigate();
 
   const userIDChange = (event) => {
@@ -44,7 +44,7 @@ function Login() {
         console.log(res.data.data)
         console.log(res)
         setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
-        navi("/signup")
+        navi("/Write")
       }
     }
     catch(error){

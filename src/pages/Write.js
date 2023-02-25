@@ -13,7 +13,7 @@ function Write() {
   const [title, setTitle] = useState("")
   const [images, setImages] = useState("")
   const [content, setContent] = useState("")
-  const [budget, setBudget] = useState("")
+  const [budget, setBudget] = useState(0)
 
 
   const mutate = useMutation(makePost)
@@ -38,38 +38,6 @@ function Write() {
     }
   }
 
-  /*const CheckSignUp = async (event) => {
-
-    console.log("adasasd")
-    event.preventDefault();
-    console.log("zzzzzzz")
-    const data = {
-      username,
-      password
-    }
-    console.log(data)
-    console.log("hjhhhhghfgh")
-    
-    try{
-      const res = await mutate.mutateAsync(data)
-      console.log(res)
-      const {status, message} = res.data
-      console.log(status)
-      console.log(message)
-      if(status == true){
-        window.alert('로그인 성공!')
-        console.log(res.data.data)
-        console.log(res)
-        setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
-        navi("/signup")
-      }
-    }
-    catch(error){
-      window.alert(error.response.data.message)
-      console.log(error)
-    }
-    console.log("jjjjjjjjjjjjjjjj") 
-  }*/
 
   return (<>
   
