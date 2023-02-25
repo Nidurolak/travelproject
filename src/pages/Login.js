@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
 import { login } from "../api/Login";
-import { async } from "q";
 // import { useQuery } from "react-query";
 // import { login } from "../api/login";
 
@@ -31,8 +30,17 @@ function Login() {
     }
     console.log("hjhhhhghfgh")
     
-     const res = await mutate.mutateAsync(data)
-     console.log("jjjjjjjjjjjjjjjj")
+    try{
+      const res = await mutate.mutateAsync(data)
+      console.log(res)
+      const {status, message} = res.data
+      console.log(status)
+      console.log(message)
+    }
+    catch(error){
+      console.log(error)
+    }
+    console.log("jjjjjjjjjjjjjjjj") 
   }
 
   return (
