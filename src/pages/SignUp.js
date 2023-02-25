@@ -27,7 +27,6 @@ function Signup() {
     }
     console.log(data)
 
-    try
   }
 
 
