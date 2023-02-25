@@ -4,12 +4,12 @@ import { QueryClient, useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
 import { login } from "../api/Login";
 import { useNavigate } from "react-router-dom";
-// import { useQuery } from "react-query";
-// import { login } from "../api/login";
+import { useCookies } from 'react-cookie'; 
 
 function Login() {
   const [username, setusername] = useState("")
   const [password, setuserpassword] = useState("")
+  const [cookie, setCookie] = useCookies(['id'])
   const navi =useNavigate();
 
   const userIDChange = (event) => {
@@ -40,15 +40,14 @@ function Login() {
       console.log(message)
       if(status == true){
         window.alert('로그인 성공!')
-        navi("/signup")
-      }
-      else{
-        window.alert('로그인 실패!')
+        //console.log(res.data.data)
+        console.log(res.header)
+        console.log(res)
         navi("/signup")
       }
     }
     catch(error){
-      window.alert('로그인 실패!')
+      window.alert(error.response.data.message)
       console.log(error)
     }
     console.log("jjjjjjjjjjjjjjjj") 
@@ -61,7 +60,7 @@ function Login() {
           <LoginTitle>로그인ID</LoginTitle>
           <Input type="text" placeholder="ID" onChange={userIDChange} maxLength={10}/>
           <LoginTitle>비밀번호</LoginTitle>
-          <Input type="password" placeholder="Password"  onChange={userPassWordChange}/>
+          <Input type="password" placeholder="Password" onChange={userPassWordChange}/>
           <>비밀번호 혹은 ID가 일치하지 않습니다</>
           <LoginButton>로그인하기</LoginButton>
         </LoginForm>
