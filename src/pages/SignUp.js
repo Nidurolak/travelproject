@@ -1,17 +1,48 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from 'react';
 
 function Signup() {
+  const [username, setusername] = useState("")
+  const [password, setuserpassword] = useState("")
+  const [usernickname, setusernickname] = useState("")
+
+  const userIDChange = (event) => {
+    setusername(event.target.value);
+  };
+  const userPassWordChange = (event) => {
+    setuserpassword(event.target.value);
+  };
+  const userNicknameChange = (event) => {
+    setusernickname(event.target.value);
+  };
+
+  const CheckSignUp = async (event) => {
+
+    event.preventDefault();
+    const data = {
+      username,
+      password,
+      usernickname,
+    }
+    console.log(data)
+  }
+
+
+
+
   return (
     <SignupContainer>
+      <form onSubmit={CheckSignUp}>
       <SignupForm>
         <SignupTitle>회원가입</SignupTitle>
-        <Input type="text" placeholder="회원가입 ID" />
-        <Input type="password" placeholder="비밀번호" />
-        <Input type="text" placeholder="닉네임" />
+        <Input type="text" placeholder="회원가입 ID"  onChange={userIDChange}/>
+        <Input type="password" placeholder="비밀번호"  onChange={userPassWordChange}/>
+        <Input type="text" placeholder="닉네임"  onChange={userNicknameChange}/>
         <>ID는 6~14글자 사이여야 합니다</>
         <SignupButton>가입하기</SignupButton>
       </SignupForm>
+      </form>
     </SignupContainer>
   );
 }
@@ -25,7 +56,7 @@ const SignupContainer = styled.div`
   height: 100vh;
 `;
 
-const SignupForm = styled.form`
+const SignupForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

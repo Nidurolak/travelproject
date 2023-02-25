@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
 import { login } from "../api/Login";
+import { useNavigate } from "react-router-dom";
 // import { useQuery } from "react-query";
 // import { login } from "../api/login";
 
 function Login() {
   const [username, setusername] = useState("")
   const [password, setuserpassword] = useState("")
+  const navi =useNavigate();
 
   const userIDChange = (event) => {
     setusername(event.target.value);
@@ -36,8 +38,17 @@ function Login() {
       const {status, message} = res.data
       console.log(status)
       console.log(message)
+      if(status == true){
+        window.alert('로그인 성공!')
+        navi("/signup")
+      }
+      else{
+        window.alert('로그인 실패!')
+        navi("/signup")
+      }
     }
     catch(error){
+      window.alert('로그인 실패!')
       console.log(error)
     }
     console.log("jjjjjjjjjjjjjjjj") 
