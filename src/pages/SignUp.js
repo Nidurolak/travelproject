@@ -26,6 +26,8 @@ function Signup() {
       usernickname,
     }
     console.log(data)
+
+    try
   }
 
 
