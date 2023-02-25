@@ -30,6 +30,7 @@ function Login() {
       username,
       password
     }
+    console.log(data)
     console.log("hjhhhhghfgh")
     
     try{
@@ -40,9 +41,9 @@ function Login() {
       console.log(message)
       if(status == true){
         window.alert('로그인 성공!')
-        //console.log(res.data.data)
-        console.log(res.header)
+        console.log(res.data.data)
         console.log(res)
+        setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
         navi("/signup")
       }
     }
