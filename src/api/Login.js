@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 
 const instance = axios.create({
   baseURL: "http://sparta-kdh.kro.kr/api",
