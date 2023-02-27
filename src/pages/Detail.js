@@ -29,17 +29,7 @@ function Detail() {
   const budget = "";
   const likeCount = "";
   const createdAt = "";
-
-  const mutate = useMutation()
   const pam = useParams()
-  const testData = {
-     title : "title",
-     images : "images",
-     content : "content",
-     budget : "10~30",
-     likeCount : "999",
-     createdAt : "1995-01-08"
-  }
   console.log(pam.id)
   const{isLoading, isError, data} = useQuery("getDetail", () => getDetail(pam.id))
   if(isLoading){
@@ -49,27 +39,24 @@ function Detail() {
     return<div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
   console.log(data.data)
-/*
-  function DataAssignment(testData){
-    title = testData.title;
-    images = testData.images;
-    content = testData.content;
-    budget = testData.budget;
-    likeCount = testData.likeCount;
-    createdAt = testData.createdAt;
-  }
-*/
   return (<>
   <HeadBar>
   </HeadBar>
     <Container>
-      <input></input>
+      <DetailContainer>
+        <DetailContentContainer>
+        <DetailContentLeftBox>
+          <DetailContentLeftImage imageUrl={data.data.images}/>
+          </DetailContentLeftBox>
+        <DetailContentRightBox>asdasd
     <h2>타이틀 : {data.data.title}</h2>
-    <h2>이미지 : {data.data.images}</h2>
     <h2>내용 : {data.data.content}</h2>
     <h2>예산 : {data.data.budget}</h2>
     <h2>좋아요 : {data.data.likeCount}</h2>
     <h2>작성일 : {data.data.createdAt}</h2>
+    </DetailContentRightBox>
+        </DetailContentContainer>
+      </DetailContainer>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
@@ -85,8 +72,70 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-height: 100vh;
+padding-top: 15px;
 `
+
+const DetailContainer = styled.div`
+display: flex;
+align-items: center;
+flex-direction: column;
+justify-content: flex-end;
+width: 1200px;
+max-width: 80%;
+height: 600px;
+background-color: rgb(230, 230, 230);
+`
+
+const DetailContentContainer = styled.div`
+display: flex;
+  flex: 1;
+flex-wrap: wrap;
+align-items: center;
+justify-content: flex-end;
+padding: 10px;
+background-color: rgb(210, 210, 210);
+`
+const DetailContentLeftBox = styled.div`
+display: flex;
+  flex: 1;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width:550px;
+height: 400px;
+background-color: rgb(170, 170, 170);
+`
+
+const DetailContentLeftImage = styled.div`
+background-image: url(${props => props.imageUrl});
+  width: 300px;
+  height: 240px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:center center;
+  `
+
+const DetailContentLeftButtonBox = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+  flex: 1;
+width:550px;
+height: 400px;
+background-color: rgb(190, 190, 190);
+`
+const DetailContentRightBox = styled.div`
+display: flex;
+  flex: 1;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width:550px;
+height: 400px;
+background-color: rgb(170, 170, 170);
+`
+
 
 const DetailRepleBox = styled.div`
 width: 500px;
