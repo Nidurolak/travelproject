@@ -48,7 +48,7 @@ function Detail() {
         <DetailContentLeftBox>
           <DetailContentLeftImage imageUrl={data.data.images}/>
           </DetailContentLeftBox>
-        <DetailContentRightBox>asdasd
+        <DetailContentRightBox>
     <h2>타이틀 : {data.data.title}</h2>
     <h2>내용 : {data.data.content}</h2>
     <h2>예산 : {data.data.budget}</h2>
@@ -57,7 +57,17 @@ function Detail() {
     </DetailContentRightBox>
         </DetailContentContainer>
       </DetailContainer>
-    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    <DetailRepleBox>
+      <RepleComment>
+        asdasdasdasdasdasdsda
+      </RepleComment>
+      <RepleComment>
+        asdasdasdasdasdasdsda
+      </RepleComment>
+      <RepleComment>
+        asdasdasdasdasdasdsda
+      </RepleComment>
+    </DetailRepleBox>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
     <DetailRepleBox>adsasdasdas</DetailRepleBox>
@@ -146,5 +156,18 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 `
+const RepleComment = styled.div`
+width: 500px;
+height: 90px;
+font-size: 14px;
+overflow: hidden;
+word-break: break-word;
+text-overflow: ellipsis;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+const Replename = styled.div``
+const RepleDate = styled.div``
 
 export default Detail;
