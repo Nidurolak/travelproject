@@ -2,28 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
-import { getDetail } from "../api/Detail";
+import { getDetail,deleteComment } from "../api/Detail";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
 import HeadBar from "../components/header/Header";
 import { useSelector } from "react-redux";
 
-//받아와야할 정보들
-/*
-"title": "나의 여행게시물입니다.", 
-"username": "test123",
-"images": "file:///D:/sparta/%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%E1%84%85%E1%85%B3%E1%84%90%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B5.png",
-"content": "ㅎ에헤헤 에헤헤 에헤헤ㅎ",
-"budget": 2,
-"likeCount": 0,
-"createdAt": "2023-02-26T17:32:06.999882",
-"comments": " "
-Q. 작성글 ID는 안 받아와도 되는가?
-A. 메인 페이지 접근 / 작성 페이지로 들어오기 때문에 없어도 무관, 이미 받아옴.
-}
-*/ 
-
 function ShowReples(props){
+
+  const deleteMutate = useMutation(deleteComment)
+  const DeleteCommentHandler = (props) =>{
+    deleteMutate.mutate(props.pam, props.id)
+  }
+  const commenteCase = {
+    pam : props.pam,
+    commetId : props.commentId
+  }
   return(<>
     <DetailRepleBox>
       <RepleReftContainer>
@@ -35,10 +29,11 @@ function ShowReples(props){
         {props.comment}
       </RepleComment>
       </RepleReftContainer>
-      <RepleDeleteBox></RepleDeleteBox>
+      <RepleDeleteBox onClick={() => DeleteCommentHandler(commenteCase)}></RepleDeleteBox>
     </DetailRepleBox>
   </>)
 }
+//console.log(commenteCase)
 function Detail() {
 
   const isLogin = useSelector((state) => state.isLogin)
@@ -78,10 +73,9 @@ function Detail() {
             id = {item.id}
              username = {item.username}
               comment = {item.comment}
-               createdAt = {item.createdAt} />)})}
-
-
-
+               createdAt = {item.createdAt}
+               pam = {pam}
+               commentId = {item.id} />)})}
     <DetailRepleBox>
       <RepleReftContainer>
       <RepleComment bg = {"gold"} height = {"25"} width = {"300"} fontsize = {"14"}>
