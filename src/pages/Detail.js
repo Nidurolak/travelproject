@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { getDetail } from "../api/Detail";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
+import HeadBar from "../components/header/Header";
 
 //받아와야할 정보들
 /*
@@ -39,15 +40,15 @@ function Detail() {
      likeCount : "999",
      createdAt : "1995-01-08"
   }
-  const{isLoading, isError, data} = useQuery("getDetail", getDetail)
+  console.log(pam.id)
+  const{isLoading, isError, data} = useQuery("getDetail", () => getDetail(pam.id))
   if(isLoading){
     return<div>로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........</div>
   }
   if(isError){
     return<div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
-
-  console.log(testData)
+  console.log(data.data)
 /*
   function DataAssignment(testData){
     title = testData.title;
@@ -59,15 +60,42 @@ function Detail() {
   }
 */
   return (<>
-  
-    <h2>{testData.title}</h2>
-    <h2>{testData.images}</h2>
-    <h2>{testData.content}</h2>
-    <h2>{testData.budget}</h2>
-    <h2>{testData.likeCount}</h2>
-    <h2>{testData.createdAt}</h2>
+  <HeadBar>
+  </HeadBar>
+    <Container>
+      <input></input>
+    <h2>타이틀 : {data.data.title}</h2>
+    <h2>이미지 : {data.data.images}</h2>
+    <h2>내용 : {data.data.content}</h2>
+    <h2>예산 : {data.data.budget}</h2>
+    <h2>좋아요 : {data.data.likeCount}</h2>
+    <h2>작성일 : {data.data.createdAt}</h2>
+    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    <DetailRepleBox>adsasdasdas</DetailRepleBox>
+    </Container>
   
   </>);
 }
+
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100vh;
+`
+
+const DetailRepleBox = styled.div`
+width: 500px;
+height: 70px;
+border: 2px solid black;
+border-radius: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
 
 export default Detail;
