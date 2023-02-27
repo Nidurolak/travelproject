@@ -12,12 +12,13 @@ function ShowReples(props){
 
   const deleteMutate = useMutation(deleteComment)
   const DeleteCommentHandler = (props) =>{
-    deleteMutate.mutate(props.pam, props.id)
+    deleteMutate.mutate(props)
   }
   const commenteCase = {
     pam : props.pam,
-    commetId : props.commentId
+    commentId : props.commentId
   }
+  console.log(commenteCase)
   return(<>
     <DetailRepleBox>
       <RepleReftContainer>
@@ -33,7 +34,7 @@ function ShowReples(props){
     </DetailRepleBox>
   </>)
 }
-//console.log(commenteCase)
+//console.log(commenteCase){data.pam}/comment/${data.commentId}`)
 function Detail() {
 
   const isLogin = useSelector((state) => state.isLogin)
@@ -74,7 +75,7 @@ function Detail() {
              username = {item.username}
               comment = {item.comment}
                createdAt = {item.createdAt}
-               pam = {pam}
+               pam = {pam.id}
                commentId = {item.id} />)})}
     <DetailRepleBox>
       <RepleReftContainer>
