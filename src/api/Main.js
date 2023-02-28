@@ -34,9 +34,8 @@ instance.interceptors.request.use(
 );
 
 const mytextlist = async (data) => {
-  const res = await axios.post(
-    "http://sparta-kdh.kro.kr/api/travel/mylist",
-    data
+  const res = await instance.post(
+    "http://sparta-kdh.kro.kr/api/travel/mylist"
   );
   return res;
 };
