@@ -34,7 +34,6 @@ ${props => {
                 width = '50px';
                 height = '50px';
                 image = `url(${props.image})`;
-                console.log(image)
                 break;
 
             default:

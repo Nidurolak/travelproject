@@ -8,10 +8,7 @@ instance.interceptors.request.use(
   (config) => {
     // 요청 헤더를 수정합니다.
     const token = getCookie('wow')
-    console.log(token)
-    console.log('affaafa')
     config.headers["Authorization"] = token;
-    console.log("ppppppppppppp")
     return config;
   },
   (error) => {

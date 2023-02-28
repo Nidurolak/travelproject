@@ -22,9 +22,23 @@ const getDetail = async (id) => {
       return Promise.reject(error);
     }
   );
+
+  const postComment = async(comment) =>{
+    const requestJson = {
+      comment : comment.comment
+    }
+
+    console.log(requestJson)
+    await instance.post(`http://sparta-kdh.kro.kr/api/travel/${comment.pam}/comment`, requestJson)
+  }
   
   const deleteComment = async(data) =>{
      const res = await instance.delete(`http://sparta-kdh.kro.kr/api/travel/${data.pam}/comment/${data.commentId}`)
      return res;
   }
-export { getDetail,deleteComment};
+  
+  const deleteDetail = async(pam) =>{
+     const res = await instance.delete(`http://sparta-kdh.kro.kr/api/travel/${pam}`)
+     return res;
+  }
+export { getDetail,deleteComment, deleteDetail, postComment};
