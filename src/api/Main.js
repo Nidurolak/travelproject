@@ -1,11 +1,15 @@
 import axios from "axios";
 
-const randomList = async () => {
+const RandomList = async () => {
   try {
-    const response = await axios.get("http://sparta-kdh.kro.kr/api/travel");
-    return response;
+    const res = await axios.get("http://sparta-kdh.kro.kr/api/travel");
+    return res;
   } catch (e) {
-    console.log("showStore", e);
+    console.log("RandomList", e);
   }
 };
-export { randomList };
+// const landomList=async()=>{
+//   const response=await axios.get()
+// }
+
+export { RandomList };
