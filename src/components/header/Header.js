@@ -2,7 +2,45 @@
 import CustomButton from '../Button';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { getUser } from '../../api/Getuser';import React, { useState } from "react";
+import { QueryClient, useMutation, useQuery } from 'react-query';
+import { getDetail, deleteComment, deleteDetail, postComment } from "../../api/Detail";
+import { useNavigate, useParams } from "react-router-dom";
+import { Cookies, useCookies } from 'react-cookie'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
+import { async } from 'q';
+
 function HeadBar(){
+  const mutate = useMutation(getUser)
+  const dispatch = useDispatch()
+
+  /*const { isLoading, isError, data } = useQuery("user", getUser);
+  if(isLoading){
+    return<div>로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........</div>
+  }
+  if(isError){
+    return<div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
+  }
+ console.log(data)*/
+  const CheckUser = async () =>{
+    try{
+      const res = await mutate.mutateAsync("adadad")
+      console.log(res)
+      console.log(")))))))))))))")
+
+
+    }
+    catch(error){
+        console.log("afgaagaag")
+    }
+  }
+
+  useEffect(() => {
+    CheckUser()
+    console.log("김재우 멋쟁이")
+  }, [])
+
     return(<>
         <Header>
           <Link to={'/'}>

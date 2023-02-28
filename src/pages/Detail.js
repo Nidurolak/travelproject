@@ -7,6 +7,7 @@ import { Cookies, useCookies } from 'react-cookie';
 import HeadBar from "../components/header/Header";
 import { useSelector } from "react-redux";
 import { getCookie } from "../util/cookie";
+import { useEffect } from "react";
 
 
 //{if(props.id != states.NickName){
@@ -15,15 +16,26 @@ import { getCookie } from "../util/cookie";
 
 function ShowReples(props){
   const {userName, userNickName} = useSelector((state) =>state.login)
-  const [showdelete, setshowdelete] = useState(false);
+  const [showdelete, setshowdelete] = useState(true);
   
   const navi = useNavigate()
   const deleteMutate = useMutation(deleteComment)
-  const DeleteCommentHandler = (props) =>{
+  const DeleteCommentHandler = (Jang) =>{
     try{
-      const res = deleteMutate.mutateAsync(props)
+      const res = deleteMutate.mutateAsync(Jang)
+      console.log("dfjkcfjkfjkfmk,fmk,fmk,fk,fkfkfmk", res)
       window.alert("삭제 완료.")
-      window.location.reload()
+      console.log(props)
+      props.setdataset(res.data.data)
+      //2가지 방법이 있다.
+      //1번은 내가 지금 댓글 목록이 있다면 그 중에서 하나를 지우면 삭제 완료가 된 목록을 다시 겟 목록 요청
+      //삭제 버튼 누르면 리패치
+      //여기서의 문제점은 모든 리스트를 싹 날리고 다시 가지고 오기 때문에
+      //리소스 낭비가 좀 있다
+      //2번 방법은 디테일 페이지에 다 받아오니깐
+      //굳이 새로고침하면 받아올건데 그냥 겟 요청 다시 하기는 솔직히 좀 그러니;
+      //이 버튼만 지우면 지우자.
+      //넌 끝이야props.refetch(props.pam)
     }
     catch(error){
       window.alert("유효하지 않은 아이디입니다.")
@@ -35,10 +47,10 @@ function ShowReples(props){
     commentId : props.commentId
   }
 
-  console.log(showdelete)
-  console.log(userName)
-  console.log(props.username)
-  if(userName == props.username){
+  //console.log(showdelete)
+  //console.log(userName)
+  //console.log(props.username)
+  if(userName === props.username){
     setshowdelete(true)
   }
   return(<>
@@ -80,20 +92,33 @@ function Detail() {
   const commentHandler = (event) =>{
     setComment(event.target.value)
   }
-
-  const{isLoading, isError, data} = useQuery("getDetail", () => getDetail(pam.id))
+  const [phase, setphase] = useState(true)
+  const [dataset, setdataset] = useState([]);
+  
+  const{isLoading, isError, data, refetch} = useQuery("getDetail", () => getDetail(pam.id), {onSuccess: (res) => {
+    console.log(res.data.comments)
+    if(res.data.comments.length > 0){
+      setdataset(res.data.comments)
+      //이게 안보이는 이유는 셋데이타셋을 하는건 이프문 안 끝나서야
+      console.log(dataset)
+    }
+    //여기서 보일거야 바보야.
+    console.log(dataset)
+  }}   )
+  //이게 진짜야 바보야. 함수를 빠져나와야 갱신되는거야/
+  console.log(dataset)
   if(isLoading){
     return<div>로딩중.........로딩중.........딩중.........로딩중.........</div>
   }
   if(isError){
     return<div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
-  
+
+
   const DetailDeleteHandler = (props) => {
     deleteMutate.mutate(pam.id)
     window.location.reload()
   }
-  
   const CommentSubmitHandler = (event) => {
     if(getCookie('wow') != null){
       console.log("쿠키 있네?")
@@ -115,21 +140,19 @@ function Detail() {
 
   }
 
-  const pahsebutton = true
+  const phasebutton = true
+  
   return (<>
-  <HeadBar>
-  </HeadBar>
     <Container>
       <DetailContainer>
-        {pahsebutton && (
+        {phase && (
         <DetailContentContainer>
         <DetailContentLeftBox>
           <DetailContentLeftImage imageUrl={data.data.images}/>
           <DetailcontentLeftButtonBox>
-            <DetailContentButton>수정하기</DetailContentButton>
+            <DetailContentButton onClick={() => setphase(false)}>수정하기</DetailContentButton>
             <DetailContentButton onClick={() => DetailDeleteHandler(pam.id)}>삭제하기</DetailContentButton>
             <DetailContentButton>좋아요</DetailContentButton>
-
           </DetailcontentLeftButtonBox>
           </DetailContentLeftBox>
         <DetailContentRightBox>
@@ -142,13 +165,16 @@ function Detail() {
         </DetailContentContainer>
 
         )}
+        {!phasebutton && (
+          <DetailPutContainer></DetailPutContainer>
+        )}
         <CommentInputBox>
         <CommentInput onChange={commentHandler} placeholder="100자 미만으로 적어주세요" maxLength={99}></CommentInput>
         <CommentSubmit onClick={CommentSubmitHandler}></CommentSubmit>
         </CommentInputBox>
       </DetailContainer>
 
-      {data.data.comments.map((item) => {
+      {dataset.map((item) => {
         return (<ShowReples
            key = {item.id}
             id = {item.id}
@@ -157,7 +183,8 @@ function Detail() {
                createdAt = {item.createdAt}
                pam = {pam.id}
                commentId = {item.id}
-               nickname = {item.nickname} />)})}
+               nickname = {item.nickname}
+              setdataset = {setdataset} />)})}
     </Container>
   
   </>);
@@ -232,6 +259,17 @@ align-items: center;
 justify-content: flex-end;
 padding: 10px;
 background-color: rgb(210, 210, 210);
+`
+
+const DetailPutContainer = styled.div`
+display: flex;
+flex:  1;
+flex-wrap: wrap;
+align-items: center;
+justify-content: flex-end;
+padding: 10px;
+background-color: rgb(255, 200, 200);
+
 `
 const DetailContentLeftBox = styled.div`
 display: flex;
