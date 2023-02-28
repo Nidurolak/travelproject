@@ -7,6 +7,7 @@ import { Cookies, useCookies } from 'react-cookie';
 import HeadBar from "../components/header/Header";
 import { useSelector } from "react-redux";
 import { getCookie } from "../util/cookie";
+import { useEffect } from "react";
 
 
 //{if(props.id != states.NickName){
@@ -14,9 +15,7 @@ import { getCookie } from "../util/cookie";
 //}}
 
 function ShowReples(props){
-  let states = useSelector((state)=>{
-    return state
-  })
+  const {userName, userNickName} = useSelector((state) =>state.login)
   
   const navi = useNavigate()
   const deleteMutate = useMutation(deleteComment)
@@ -35,12 +34,18 @@ function ShowReples(props){
     pam : props.pam,
     commentId : props.commentId
   }
-  const showdelete = false;
-  console.log(states.isLogin.userName.username)
+  const {showdelete, setshowdelete} =useState(false);
+
+  console.log(userName)
   console.log(props.username)
-  if(states.isLogin.userName.username == props.username){
-    showdelete = true
-  }
+  //여기 안에다 유스무ㅠㅓㅗ시기 해!
+  //의존성 배열은 저리가고
+  //폼 바꾸기도 이걸로 해!
+  useEffect(() => {
+    if(userName == props.username){
+      setshowdelete(true)
+    }
+  }, [])
   return(<>
     <DetailRepleBox>
       <RepleReftContainer>
@@ -61,9 +66,7 @@ function ShowReples(props){
 //console.log(commenteCase){data.pam}/comment/${data.commentId}`)
 function Detail() {
   const navi = useNavigate()
-  let states = useSelector((state)=>{
-    return state
-  })
+  const {userName, userNickName} = useSelector((state) =>state.login)
   
   const deleteMutate = useMutation(deleteDetail)
   const addMutate = useMutation(postComment)
@@ -89,7 +92,7 @@ function Detail() {
   const CommentSubmitHandler = (event) => {
     if(getCookie('wow') != null){
       console.log("쿠키 있네?")
-      console.log(states.isLogin)
+      console.log(userName)
       const data = {
         pam : pam.id,
         comment,

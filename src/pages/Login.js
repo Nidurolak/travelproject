@@ -13,6 +13,7 @@ function Login() {
   const [password, setuserpassword] = useState("")
   const [cookie, setCookie] = useCookies(['wow'])
   const navi =useNavigate();
+  const {userName, userNickName} = useSelector((state) =>state.login)
 
   const userIDChange = (event) => {
     setusername(event.target.value);
@@ -30,17 +31,15 @@ function Login() {
       username,
       password
     }
-    console.log(data)
     
     try{
       const res = await mutate.mutateAsync(data)
       const {status, message} = res.data
+      console.log(res.data.data.token)
       if(status == true){
         window.alert('로그인 성공!')
-        //토큰값 바뀌면 바꿔써야해.
-        setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
-        dispatch(isLogin({username}))
-        console.log(states.isLogin.userName.username, " asaassas")
+        setCookie("wow", res.data.data.token, {path: "/", sameSite:"strict"})
+        dispatch(isLogin({username : username, usernickname: res.data.data.nickname}))
         navi("/write")
       }
     }
@@ -48,12 +47,9 @@ function Login() {
       window.alert(error.response.data.message)
       console.log(error)
     }
-    console.log("jjjjjjjjjjjjjjjj") 
+    //console.log("요기 너머에 유저네임 와야함 ",userName)
   }
 
-  let states = useSelector((state)=>{
-    return state
-  })
 
   return (
     <LoginContainer>
@@ -64,7 +60,7 @@ function Login() {
           <LoginTitle>비밀번호</LoginTitle>
           <Input type="password" placeholder="Password" onChange={userPassWordChange}/>
           <>비밀번호 혹은 ID가 일치하지 않습니다</>
-          <LoginButton onClick={console.log("aaaaaa")}>로그인하기</LoginButton>
+          <LoginButton>로그인하기</LoginButton>
         </LoginForm>
       </form>
     </LoginContainer>
