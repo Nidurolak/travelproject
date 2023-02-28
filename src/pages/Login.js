@@ -47,10 +47,8 @@ function Login() {
       window.alert(error.response.data.message)
       console.log(error)
     }
-    //console.log("요기 너머에 유저네임 와야함 ",userName)
+    console.log("요기 너머에 유저네임 와야함 ",userName)
   }
-
-
   return (
     <LoginContainer>
       <form onSubmit={CheckLogin}>

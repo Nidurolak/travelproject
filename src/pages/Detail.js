@@ -7,7 +7,6 @@ import { Cookies, useCookies } from 'react-cookie';
 import HeadBar from "../components/header/Header";
 import { useSelector } from "react-redux";
 import { getCookie } from "../util/cookie";
-import { useEffect } from "react";
 
 
 //{if(props.id != states.NickName){
@@ -16,6 +15,7 @@ import { useEffect } from "react";
 
 function ShowReples(props){
   const {userName, userNickName} = useSelector((state) =>state.login)
+  const [showdelete, setshowdelete] = useState(false);
   
   const navi = useNavigate()
   const deleteMutate = useMutation(deleteComment)
@@ -34,18 +34,13 @@ function ShowReples(props){
     pam : props.pam,
     commentId : props.commentId
   }
-  const {showdelete, setshowdelete} =useState(false);
 
+  console.log(showdelete)
   console.log(userName)
   console.log(props.username)
-  //여기 안에다 유스무ㅠㅓㅗ시기 해!
-  //의존성 배열은 저리가고
-  //폼 바꾸기도 이걸로 해!
-  useEffect(() => {
-    if(userName == props.username){
-      setshowdelete(true)
-    }
-  }, [])
+  if(userName == props.username){
+    setshowdelete(true)
+  }
   return(<>
     <DetailRepleBox>
       <RepleReftContainer>
@@ -64,6 +59,16 @@ function ShowReples(props){
   </>)
 }
 //console.log(commenteCase){data.pam}/comment/${data.commentId}`)
+
+
+
+
+
+
+
+
+
+
 function Detail() {
   const navi = useNavigate()
   const {userName, userNickName} = useSelector((state) =>state.login)
@@ -109,11 +114,14 @@ function Detail() {
     }
 
   }
+
+  const pahsebutton = true
   return (<>
   <HeadBar>
   </HeadBar>
     <Container>
       <DetailContainer>
+        {pahsebutton && (
         <DetailContentContainer>
         <DetailContentLeftBox>
           <DetailContentLeftImage imageUrl={data.data.images}/>
@@ -132,6 +140,8 @@ function Detail() {
     <h2>작성일 : {data.data.createdAt}</h2>
     </DetailContentRightBox>
         </DetailContentContainer>
+
+        )}
         <CommentInputBox>
         <CommentInput onChange={commentHandler} placeholder="100자 미만으로 적어주세요" maxLength={99}></CommentInput>
         <CommentSubmit onClick={CommentSubmitHandler}></CommentSubmit>
