@@ -24,6 +24,7 @@ const getDetail = async (id) => {
   );
   
   const deleteComment = async(data) =>{
-     await instance.delete(`http://sparta-kdh.kro.kr/api/travel/${data.pam}/comment/${data.commentId}`)
+     const res = await instance.delete(`http://sparta-kdh.kro.kr/api/travel/${data.pam}/comment/${data.commentId}`)
+     return res;
   }
 export { getDetail,deleteComment};

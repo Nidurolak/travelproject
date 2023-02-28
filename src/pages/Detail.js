@@ -77,30 +77,6 @@ function Detail() {
                createdAt = {item.createdAt}
                pam = {pam.id}
                commentId = {item.id} />)})}
-    <DetailRepleBox>
-      <RepleReftContainer>
-      <RepleComment bg = {"gold"} height = {"25"} width = {"300"} fontsize = {"14"}>
-        <div>adsasdasdasaag</div>
-        <div>qqqqqqqqq</div>
-      </RepleComment>
-      <RepleComment bg = {"gray"} height = {"90"} width = {"550"} fontsize = {"22"}>
-        코카콜라 맛있다 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라 빠르면 비행기 비행기는 높아 높으면 기린 기린이었나?
-      </RepleComment>
-      </RepleReftContainer>
-      <RepleDeleteBox></RepleDeleteBox>
-    </DetailRepleBox>
-    <DetailRepleBox>
-      <RepleReftContainer>
-      <RepleComment bg = {"gold"} height = {"25"} width = {"300"} fontsize = {"14"}>
-        <div>adsasdasdasaag</div>
-        <div>qqqqqqqqq</div>
-      </RepleComment>
-      <RepleComment bg = {"gray"} height = {"90"} width = {"550"} fontsize = {"22"}>
-        코카콜라 맛있다 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라 빠르면 비행기 비행기는 높아 높으면 기린 기린이었나?
-      </RepleComment>
-      </RepleReftContainer>
-      <RepleDeleteBox></RepleDeleteBox>
-    </DetailRepleBox>
     </Container>
   
   </>);
