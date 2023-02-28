@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { QueryClient, useMutation, useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { getDetail,deleteComment, deleteDetail, postComment } from "../api/Detail";
 import { useNavigate, useParams } from "react-router-dom";
 import { Cookies, useCookies } from 'react-cookie'; 
@@ -10,48 +10,32 @@ import { getCookie } from "../util/cookie";
 import { useEffect } from "react";
 
 
-//{if(props.id != states.NickName){
-
-//}}
-
 function ShowReples(props){
   const {userName, userNickName} = useSelector((state) =>state.login)
-  const [showdelete, setshowdelete] = useState(true);
+  const [showdelete, setshowdelete] = useState(false);
   
   const navi = useNavigate()
   const deleteMutate = useMutation(deleteComment)
-  const DeleteCommentHandler = (Jang) =>{
+
+
+  const DeleteCommentHandler = (jang) =>{
     try{
-      const res = deleteMutate.mutateAsync(Jang)
+      const res = deleteMutate.mutateAsync(jang)
       console.log("dfjkcfjkfjkfmk,fmk,fmk,fk,fkfkfmk", res)
       window.alert("삭제 완료.")
       console.log(props)
       props.setdataset(res.data.data)
-      //2가지 방법이 있다.
-      //1번은 내가 지금 댓글 목록이 있다면 그 중에서 하나를 지우면 삭제 완료가 된 목록을 다시 겟 목록 요청
-      //삭제 버튼 누르면 리패치
-      //여기서의 문제점은 모든 리스트를 싹 날리고 다시 가지고 오기 때문에
-      //리소스 낭비가 좀 있다
-      //2번 방법은 디테일 페이지에 다 받아오니깐
-      //굳이 새로고침하면 받아올건데 그냥 겟 요청 다시 하기는 솔직히 좀 그러니;
-      //이 버튼만 지우면 지우자.
-      //넌 끝이야props.refetch(props.pam)
     }
     catch(error){
       window.alert("유효하지 않은 아이디입니다.")
-      console.log(error.response.data.message)
+      console.log(error)
     }
   }
+
+
   const commenteCase = {
     pam : props.pam,
     commentId : props.commentId
-  }
-
-  //console.log(showdelete)
-  //console.log(userName)
-  //console.log(props.username)
-  if(userName === props.username){
-    setshowdelete(true)
   }
   return(<>
     <DetailRepleBox>
@@ -63,29 +47,27 @@ function ShowReples(props){
       <RepleComment bg = {"gray"} height = {"90"} width = {"550"} fontsize = {"22"}>
         {props.comment}
       </RepleComment>
-      </RepleReftContainer>{showdelete && (
+      </RepleReftContainer>{
+    (userNickName === props.nickname)&&(
       <RepleDeleteBox onClick={() => DeleteCommentHandler(commenteCase)}>
       </RepleDeleteBox>)}
       
     </DetailRepleBox>
   </>)
 }
-//console.log(commenteCase){data.pam}/comment/${data.commentId}`)
-
-
-
-
-
 
 
 
 
 
 function Detail() {
+  const queryclient = useQueryClient();
   const navi = useNavigate()
   const {userName, userNickName} = useSelector((state) =>state.login)
   
-  const deleteMutate = useMutation(deleteDetail)
+  const deleteMutate = useMutation(deleteDetail, {onSuccess: () => {
+    queryclient.invalidateQueries("getDetail");
+  }})
   const addMutate = useMutation(postComment)
   const pam = useParams()
   const [comment, setComment] = useState("");
@@ -96,17 +78,12 @@ function Detail() {
   const [dataset, setdataset] = useState([]);
   
   const{isLoading, isError, data, refetch} = useQuery("getDetail", () => getDetail(pam.id), {onSuccess: (res) => {
-    console.log(res.data.comments)
+
     if(res.data.comments.length > 0){
+      console.log(res.data.comments)
       setdataset(res.data.comments)
-      //이게 안보이는 이유는 셋데이타셋을 하는건 이프문 안 끝나서야
-      console.log(dataset)
     }
-    //여기서 보일거야 바보야.
-    console.log(dataset)
   }}   )
-  //이게 진짜야 바보야. 함수를 빠져나와야 갱신되는거야/
-  console.log(dataset)
   if(isLoading){
     return<div>로딩중.........로딩중.........딩중.........로딩중.........</div>
   }
@@ -117,17 +94,15 @@ function Detail() {
 
   const DetailDeleteHandler = (props) => {
     deleteMutate.mutate(pam.id)
-    window.location.reload()
+    queryclient.invalidateQueries();
   }
   const CommentSubmitHandler = (event) => {
     if(getCookie('wow') != null){
       console.log("쿠키 있네?")
-      console.log(userName)
       const data = {
         pam : pam.id,
         comment,
       }
-      console.log(data)
         addMutate.mutate(data)
         window.alert("댓글 작성 성공")
         window.location.reload()
@@ -142,7 +117,14 @@ function Detail() {
 
   const phasebutton = true
   
+
+
+  if(isLoading == false){
+    console.log(data.data.comments)
+  }
+
   return (<>
+  <HeadBar></HeadBar>
     <Container>
       <DetailContainer>
         {phase && (
@@ -174,7 +156,7 @@ function Detail() {
         </CommentInputBox>
       </DetailContainer>
 
-      {dataset.map((item) => {
+      {data.data.comments.map((item) => {
         return (<ShowReples
            key = {item.id}
             id = {item.id}
@@ -189,6 +171,36 @@ function Detail() {
   
   </>);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const Container = styled.div`
 display: flex;

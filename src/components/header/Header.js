@@ -10,9 +10,11 @@ import { Cookies, useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { async } from 'q';
+import { isLogin } from '../../redux/modules/loginSlice';
 
 function HeadBar(){
   const mutate = useMutation(getUser)
+  const userNickName = useSelector((state) =>state.login)
   const dispatch = useDispatch()
 
   /*const { isLoading, isError, data } = useQuery("user", getUser);
@@ -26,16 +28,17 @@ function HeadBar(){
   const CheckUser = async () =>{
     try{
       const res = await mutate.mutateAsync("adadad")
-      console.log(res)
+      console.log(res.data.data.nickname)
       console.log(")))))))))))))")
-
-
+    dispatch(isLogin({nickname: res.data.data.nickname}))
+      //닉네임만 챙겨야한다. 
     }
     catch(error){
         console.log("afgaagaag")
     }
   }
 
+  console.log(userNickName)
   useEffect(() => {
     CheckUser()
     console.log("김재우 멋쟁이")

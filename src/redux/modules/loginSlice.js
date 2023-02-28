@@ -10,9 +10,10 @@ const loginSlicer = createSlice({
     initialState,
     reducers: {
         isLogin: (state, action) => {
-            state.userName = action.payload.username
+            //state.userName = action.payload.username
             state.userNickName = action.payload.nickname
             console.log(action.payload)
+            console.log(state.userNickName)
         }
         ,
         isLogout: (state, action) => {
