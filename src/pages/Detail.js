@@ -24,10 +24,10 @@ function ShowReples(props){
       console.log("dfjkcfjkfjkfmk,fmk,fmk,fk,fkfkfmk", res)
       window.alert("삭제 완료.")
       console.log(props)
-      props.setdataset(res.data.data)
+      props.setdataset(res.data?.data)
+      window.location.reload()
     }
     catch(error){
-      window.alert("유효하지 않은 아이디입니다.")
       console.log(error)
     }
   }
