@@ -6,8 +6,6 @@ const getDetail = async (id) => {
     return response.data;
   };
 
-
-
   const instance = axios.create({
     baseURL: "http://sparta-kdh.kro.kr/api/travel",
   })

@@ -8,14 +8,23 @@ import HeadBar from "../components/header/Header";
 import { useSelector } from "react-redux";
 import { getCookie } from "../util/cookie";
 
+
+//{if(props.id != states.NickName){
+
+//}}
+
 function ShowReples(props){
+  let states = useSelector((state)=>{
+    return state
+  })
+  
   const navi = useNavigate()
   const deleteMutate = useMutation(deleteComment)
   const DeleteCommentHandler = (props) =>{
     try{
       const res = deleteMutate.mutateAsync(props)
       window.alert("삭제 완료.")
-      navi("/")
+      window.location.reload()
     }
     catch(error){
       window.alert("유효하지 않은 아이디입니다.")
@@ -26,32 +35,38 @@ function ShowReples(props){
     pam : props.pam,
     commentId : props.commentId
   }
-  console.log(commenteCase)
+  const showdelete = false;
+  console.log(states.isLogin.userName.username)
+  console.log(props.username)
+  if(states.isLogin.userName.username == props.username){
+    showdelete = true
+  }
   return(<>
     <DetailRepleBox>
       <RepleReftContainer>
       <RepleComment bg = {"gold"} height = {"25"} width = {"300"} fontsize = {"14"}>
-        <div>{props.username}</div>
+        <div>{props.nickname}</div>
         <div>{props.createdAt}</div>
       </RepleComment>
       <RepleComment bg = {"gray"} height = {"90"} width = {"550"} fontsize = {"22"}>
         {props.comment}
       </RepleComment>
-      </RepleReftContainer>
-      <RepleDeleteBox onClick={() => DeleteCommentHandler(commenteCase)}></RepleDeleteBox>
+      </RepleReftContainer>{showdelete && (
+      <RepleDeleteBox onClick={() => DeleteCommentHandler(commenteCase)}>
+      </RepleDeleteBox>)}
+      
     </DetailRepleBox>
   </>)
 }
 //console.log(commenteCase){data.pam}/comment/${data.commentId}`)
 function Detail() {
-
+  const navi = useNavigate()
   let states = useSelector((state)=>{
     return state
   })
+  
   const deleteMutate = useMutation(deleteDetail)
   const addMutate = useMutation(postComment)
-  const isLogin = useSelector((state) => state.isLogin)
-
   const pam = useParams()
   const [comment, setComment] = useState("");
   const commentHandler = (event) =>{
@@ -87,6 +102,7 @@ function Detail() {
     else{
       console.log("쿠키 없네?")
       window.alert("로그인이 필툐한 기능입니다.")
+      navi("/login")
     }
 
   }
@@ -127,7 +143,8 @@ function Detail() {
               comment = {item.comment}
                createdAt = {item.createdAt}
                pam = {pam.id}
-               commentId = {item.id} />)})}
+               commentId = {item.id}
+               nickname = {item.nickname} />)})}
     </Container>
   
   </>);

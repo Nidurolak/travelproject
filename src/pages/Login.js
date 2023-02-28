@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { login } from "../api/Login";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
+import { useDispatch, useSelector } from "react-redux";
+import { isLogin } from "../redux/modules/loginSlice";
 
 function Login() {
   const [username, setusername] = useState("")
@@ -18,33 +20,28 @@ function Login() {
   const userPassWordChange = (event) => {
     setuserpassword(event.target.value);
   };
+  const dispatch = useDispatch();
 
   const mutate = useMutation(login)
 
   const CheckLogin = async (event) => {
-
-    console.log("adasasd")
     event.preventDefault();
-    console.log("zzzzzzz")
     const data = {
       username,
       password
     }
     console.log(data)
-    console.log("hjhhhhghfgh")
     
     try{
       const res = await mutate.mutateAsync(data)
-      console.log(res)
       const {status, message} = res.data
-      console.log(status)
-      console.log(message)
       if(status == true){
         window.alert('로그인 성공!')
-        console.log(res.data.data)
-        console.log(res)
+        //토큰값 바뀌면 바꿔써야해.
         setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
-        navi("/Write")
+        dispatch(isLogin({username}))
+        console.log(states.isLogin.userName.username, " asaassas")
+        navi("/write")
       }
     }
     catch(error){
@@ -53,6 +50,10 @@ function Login() {
     }
     console.log("jjjjjjjjjjjjjjjj") 
   }
+
+  let states = useSelector((state)=>{
+    return state
+  })
 
   return (
     <LoginContainer>
@@ -63,7 +64,7 @@ function Login() {
           <LoginTitle>비밀번호</LoginTitle>
           <Input type="password" placeholder="Password" onChange={userPassWordChange}/>
           <>비밀번호 혹은 ID가 일치하지 않습니다</>
-          <LoginButton>로그인하기</LoginButton>
+          <LoginButton onClick={console.log("aaaaaa")}>로그인하기</LoginButton>
         </LoginForm>
       </form>
     </LoginContainer>
