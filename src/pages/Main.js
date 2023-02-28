@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { RandomList } from "../api/Main";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { mytextlist } from "../api/Main";
 
 const Main = () => {
- 
-  const { isLoading, isError, data, refetch  } = useQuery("items", RandomList);
+  const { isLoading, isError, data, refetch } = useQuery("items", RandomList);
+  const [myTextList, setMyTextList] = useState(null);
+
   if (isLoading) {
     return (
       <div>
@@ -29,42 +32,57 @@ const Main = () => {
     );
   }
 
-  
-  // console.log(data.data.data);
+  const handleMyTextList = async () => {
+    try {
+      const response = await mytextlist();
+      console.log(response.data);
+      setMyTextList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Wrapper>
       <Box>
         <Button>게시물 작성</Button>
       </Box>
       <ButtonsWrapper>
-    
-
-<select >
-    <option value="">--예산범위--</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-   
-</select>
-
+        <select>
+          <option value="">--여기서 선택하세요--</option>
+          <option value="first">0~10</option>
+          <option value="second">10~20</option>
+          <option value="third">20~30</option>
+          <option value="four">30~40</option>
+        </select>
         <button onClick={() => refetch()}>새로고침</button>
-        <button>내가 쓴글 보기</button>
+        <button onClick={handleMyTextList}>내가 쓴글 보기</button>
       </ButtonsWrapper>
       <ItemsWrapper>
         {data.data.data.map((item) => {
           return (
             <Item key={item.id}>
-               <Link to={`/detail/${item.id}`}>
-          <ItemImage imageUrl={item.images} />
-        </Link>
+              <Link to={`/detail/${item.id}`}>
+                <ItemImage imageUrl={item.images} />
+              </Link>
             </Item>
           );
         })}
       </ItemsWrapper>
+      {myTextList && (
+        <div>
+          <h2>내가 쓴 글 목록</h2>
+          <ul>
+            {myTextList.map((text) => (
+              <li key={text.id}>{text.content}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Wrapper>
   );
 };
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
