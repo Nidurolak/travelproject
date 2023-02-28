@@ -11,19 +11,7 @@ const Main = () => {
 
   const { isLoading, isError, data, refetch } = useQuery("items", RandomList);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await mytextlist();
-        console.log(response.data);
-        setMyTextList(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   if (isLoading) {
     return (
