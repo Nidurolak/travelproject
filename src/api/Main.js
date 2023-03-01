@@ -32,10 +32,10 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+const token=getCookie('wow')
 const mytextlist = async () => {
  try{ const res = await axios.get(
-    "http://sparta-kdh.kro.kr/api/travel/mylist"
+    "http://sparta-kdh.kro.kr/api/travel/mylist",{headers:{Authorization:token} }
   );
   return res;
  } catch(error){

@@ -1,24 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { RandomList } from "../api/Main";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { mytextlist } from "../api/Main";
+import { getCookie } from "../util/cookie";
 
 const Main = () => {
-  // const [myTextList, setMyTextList] = useState(null);
   const items = useQuery('items', RandomList);
-  const lists= useQuery('lists', mytextlist);
+  const lists = useQuery('lists', mytextlist);
+  const [myItems, setMyItems] = useState([]);
+  const [showMyItems, setShowMyItems] = useState(false);
+  const token = getCookie("wow");
 
+  useEffect(() => {
+    if (lists.data) {
+      setMyItems(lists.data.data.data);
+    }
+  }, [lists.data]);
 
-//   const { data } = useQuery(["lists", token], () =>
-//   mytextlist(token)
-// );
+  const handleMyItems = () => {
+    setShowMyItems(true);
+    lists.refetch();
+  };
 
+  console.log(myItems);
 
-  // console.log(lists);
-  
   if (items.isLoading || lists.isLoading) {
     return (
       <div>
@@ -32,15 +39,8 @@ const Main = () => {
       </div>
     );
   }
-  
-  // const handleMyTextList = () => {
-  //   if (lists.data) {
-  //     setMyTextList(lists.data);
-  //   }
-  // };
-  
-  return (
 
+  return (
     <Wrapper>
       <Box>
         <Button>게시물 작성</Button>
@@ -54,34 +54,30 @@ const Main = () => {
           <option value="4">30~40</option>
         </select>
         <button onClick={() => items.refetch()}>새로고침</button>
-        <button >내가 쓴글 보기</button>
+        <button onClick={handleMyItems}>내가 쓴글 보기</button>
       </ButtonsWrapper>
       <ItemsWrapper>
-        {items.isLoading === false && items?.data?.data?.data?.map((item) => {
-          // console.log(item);
-          return (
+        {showMyItems && myItems.length > 0 ? (
+          myItems.map((item) => (
             <Item key={item.id}>
               <Link to={`/detail/${item.id}`}>
                 <ItemImage imageUrl={item.images} />
               </Link>
             </Item>
-          );
-        })}
+          ))
+        ) : (
+          items.data?.data?.data?.map((item) => (
+            <Item key={item.id}>
+              <Link to={`/detail/${item.id}`}>
+                <ItemImage imageUrl={item.images} />
+              </Link>
+            </Item>
+          ))
+        )}
       </ItemsWrapper>
-      {/* {myTextList && ( */}
-        <div>
-          <h2>내가 쓴 글 목록</h2>
-          <ul>
-            {/* {myTextList.map((text) => (
-              <li key={text.id}>{text.content}</li>
-            ))} */}
-          </ul>
-        </div>
-      
     </Wrapper>
   );
 };
-
 
 const Wrapper = styled.div`
   display: flex;

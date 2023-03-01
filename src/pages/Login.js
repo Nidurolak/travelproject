@@ -40,11 +40,12 @@ function Login() {
       console.log(status)
       console.log(message)
       if(status == true){
+        console.log(res.data.data.token)
         window.alert('로그인 성공!')
-        console.log(res.data.data)
+        
         console.log(res)
-        setCookie("wow", res.data.data, {path: "/", sameSite:"strict"})
-        navi("/Write")
+        setCookie("wow", res.data.data.token, {path: "/", sameSite:"strict"})
+        navi("/")
       }
     }
     catch(error){
