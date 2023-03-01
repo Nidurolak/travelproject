@@ -20,6 +20,10 @@ const Main = () => {
   }, [lists.data]);
 
   const handleMyItems = () => {
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
     setShowMyItems(true);
     lists.refetch();
   };
@@ -43,7 +47,9 @@ const Main = () => {
   return (
     <Wrapper>
       <Box>
-        <Button>게시물 작성</Button>
+      <Link to="/write">
+  <Button>게시물 작성</Button>
+</Link>
       </Box>
       <ButtonsWrapper>
         <select>
