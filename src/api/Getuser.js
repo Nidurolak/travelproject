@@ -19,6 +19,7 @@ instance.interceptors.request.use(
 
 const getUser = async (data) => {
     const res = await instance.post("http://sparta-kdh.kro.kr/api/user", data);
+    console.log(res)
     return res;
   };
   

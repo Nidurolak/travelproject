@@ -30,7 +30,7 @@ function HeadBar(){
       const res = await mutate.mutateAsync("adadad")
       console.log(res.data.data.nickname)
       console.log(")))))))))))))")
-    dispatch(isLogin({nickname: res.data.data.nickname}))
+    dispatch(isLogin({username : res.data.data.username, nickname: res.data.data.nickname}))
       //닉네임만 챙겨야한다. 
     }
     catch(error){
@@ -38,8 +38,8 @@ function HeadBar(){
     }
   }
 
-  console.log(userNickName)
   useEffect(() => {
+    console.log(userNickName)
     CheckUser()
     console.log("김재우 멋쟁이")
   }, [])
