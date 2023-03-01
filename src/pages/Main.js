@@ -26,14 +26,19 @@ const Main = () => {
   const filterItems =  useMutation((selectedValue) => listfilter(selectedValue));
 
   const handleSelectChange = (e) => {
-    // setMyItems(e.target.value);
-    const data = {budgetFilter : e.target.value}
-    const res=filterItems.mutate(data);
-    console.log(res);
-
-    // console.log(e.target.value)
+    const data = {budgetFilter: e.target.value}
+    filterItems.mutate(data, {
+      onSuccess: (data) => {
+        console.log(data);
+        setMyItems(data.data.data);
+        setShowMyItems(true);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    });
   };
-
+  
  
   const handleMyItems = () => {
     if (!token) {
@@ -45,7 +50,7 @@ const Main = () => {
     lists.refetch();
   };
 
-  console.log(myItems);
+  // console.log(myItems);
 
   if (items.isLoading || lists.isLoading) {
     return (
@@ -60,28 +65,6 @@ const Main = () => {
       </div>
     );
   }
-
-  // try{
-  //   const res = await mutate.mutateAsync(data)
-  //   const {status, message} = res.data
-  //   console.log(res.data.data.token)
-  //   if(status == true){
-  //   console.log(res.data.data.token)
-  //   window.alert('로그인 성공!')
-  //   const expires = moment().add('60','m').toDate()
-  //   setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
-  //   navi("/write")
-    
-  //   }
-  //   }
-  //   catch(error){
-  //   window.alert(error.response.data.message)
-  //   console.log(error)
-  //   }
-
-
-
-
 
   return (<>
   <HeadBar/>
