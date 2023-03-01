@@ -66,48 +66,53 @@ const Main = () => {
     );
   }
 
-  return (<>
-  <HeadBar/>
-  <Wrapper>
-      <Box>   
-      <Link to="/write">
-  <Button>게시물 작성</Button>
-   </Link>
-      </Box>
-      <ButtonsWrapper>
-      <select  onChange={handleSelectChange}>
-          <option value="0">--여기서 선택하세요--</option>
-          <option value="1">0~10</option>
-          <option value="2">10~20</option>
-          <option value="3">20~30</option>
-          <option value="4">30~40</option>
-        </select>
-        <button onClick={() => items.refetch()}>새로고침</button>
-        <button onClick={handleMyItems}>내가 쓴글 보기</button>
-      </ButtonsWrapper>
-      <ItemsWrapper>
-        {showMyItems && myItems.length > 0 ? (
-          myItems.map((item) => (
-            <Item key={item.id}>
-              <Link to={`/detail/${item.id}`}>
-                <ItemImage imageUrl={item.images} />
-              </Link>
-            </Item>
-          ))
-        ) : (
-          items.data?.data?.data?.map((item) => (
-            <Item key={item.id}>
-              <Link to={`/detail/${item.id}`}>
-                <ItemImage imageUrl={item.images} />
-              </Link>
-            </Item>
-          ))
-        )}
-      </ItemsWrapper>
-    </Wrapper>
-  </>
+  return (
+    <>
+      <HeadBar/>
+      <Wrapper>
+        <Box>   
+          <Link to="/write">
+            <Button>게시물 작성</Button>
+          </Link>
+        </Box>
+        <ButtonsWrapper>
+          <select onChange={handleSelectChange}>
+            <option value="0">--여기서 선택하세요--</option>
+            <option value="1">0~10</option>
+            <option value="2">10~20</option>
+            <option value="3">20~30</option>
+            <option value="4">30~40</option>
+          </select>
+          <button onClick={() => items.refetch()}>새로고침</button>
+          <button onClick={handleMyItems}>내가 쓴글 보기</button>
+        </ButtonsWrapper>
+        <ItemsWrapper>
+          {showMyItems && myItems.length > 0 ? (
+            myItems.map((item) => (
+              <Item key={item.id}>
+                <Link to={`/detail/${item.id}`}>
+                  <ItemImage imageUrl={item.images} />
+                </Link>
+              </Item>
+            ))
+          ) : (
+            items.data?.data?.data?.map((item) => (
+              <Item key={item.id}>
+                <Link to={`/detail/${item.id}`}>
+                  <ItemImage imageUrl={item.images} >
+                  <div>💗:{item.likeCount}</div>
+                    </ItemImage>
+                </Link>
+                <div>{item.title}</div>
+                
+              </Item>
+            ))
+          )}
+        </ItemsWrapper>
+      </Wrapper>
+    </>
   );
-};
+            };
 
 const Wrapper = styled.div`
   display: flex;
@@ -116,7 +121,7 @@ const Wrapper = styled.div`
 `;
 const Box = styled.div`
   position: relative;
-  width: 80%;
+  width: 90%;
   height: 200px;
   margin: 0 auto;
   margin-top: 80px;
@@ -142,8 +147,9 @@ const ItemsWrapper = styled.div`
   border: 1px solid black;
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
+  width: 90%;
   margin: 20px auto;
+  padding: 50px;
 `;
 const Item = styled.div`
   width: 22%;
@@ -157,5 +163,6 @@ const ItemImage = styled.div`
   background-image: url(${(props) => props.imageUrl});
   background-size: cover;
   background-position: center;
+  position: relative;
 `;
 export default Main;
