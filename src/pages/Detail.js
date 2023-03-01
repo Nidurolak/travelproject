@@ -174,7 +174,9 @@ function Detail() {
     const data = new FormData()
     data.append('title', putTitleText)
     data.append('content', putContentText)
-    //data.append('images', putImage)
+    if(putImage != null){
+      data.append('images', putImage)
+    }
     data.append('budget', 1)
     const box = {
       formdata : data,

@@ -36,7 +36,8 @@ const getDetail = async (id) => {
   }
   
   const postLike = async(data) => {
-    const res = await instance.post(`http://sparta-kdh.kro.kr/api/travel/${data.pam}/like`, data)
+    console.log(data)
+    const res = await instance.post(`http://sparta-kdh.kro.kr/api/travel/${data}/like`)
     return res;
   }
   
