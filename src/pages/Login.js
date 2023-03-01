@@ -52,16 +52,10 @@ function Login() {
       if(status == true){
         console.log(res.data.data.token)
         window.alert('로그인 성공!')
-<<<<<<< HEAD
         const expires =  moment().add('60','m').toDate()
         setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
         navi("/write")
-=======
-        
-        console.log(res)
-        setCookie("wow", res.data.data.token, {path: "/", sameSite:"strict"})
-        navi("/")
->>>>>>> signupdevelop
+
       }
     }
     catch(error){

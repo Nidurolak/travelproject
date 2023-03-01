@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import styled from "styled-components";
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { getDetail, deleteComment, deleteDetail, postComment, putCotents, postLike } from "../api/Detail";
@@ -73,7 +73,8 @@ function Detail() {
   const [putTitleText, SetputTitleText] = useState()
   const [putBudget, SetputBudget] = useState()
   const [putImage, setPutImage] = useState(null)
-
+  const [preview, setPreview] = useState("");
+  let prevImageRef = ""
   const PutContentTextHandler = (event) => {
     SetPutContentText(event.target.value)
   }
@@ -84,10 +85,8 @@ function Detail() {
     SetputBudget(event.target.value)
   }
 
-  const PutImageHandler = (event) =>{
-    const selectedFile = event.target.files[0]
-    setPutImage(selectedFile)
-  }
+
+
 
   const deleteMutate = useMutation(deleteDetail, {
     onSuccess: () => {
@@ -136,6 +135,9 @@ function Detail() {
       }
     }
   })
+  prevImageRef = useRef(
+    data.data.images
+    );
   if (isLoading) {
     return <div>로딩중.........로딩중.........딩중.........로딩중.........</div>
   }
@@ -146,7 +148,6 @@ function Detail() {
   console.log(putTitleText)
   console.log(putBudget)
   console.log(putImage)
-
 
   const DetailDeleteHandler = (props) => {
     deleteMutate.mutate(pam.id)
@@ -168,6 +169,29 @@ function Detail() {
       window.alert("로그인이 필툐한 기능입니다.")
       navi("/login")
     }
+  }
+  
+
+  const PutImageHandler = (event) =>{
+    const selectedFile = event.target.files[0]
+    const reader = new FileReader()
+
+    reader.onloadend = () =>{
+      setPreview(reader.result)
+    }
+    console.log(event.target.files[0].name)
+
+    if (selectedFile) {
+      reader.readAsDataURL(selectedFile);
+      }
+      else{
+      setPreview(prevImageRef.current);
+      }
+    setPutImage(selectedFile)
+  }
+
+  function handelPrevImageLoad(){
+    prevImageRef.current = preview
   }
 
   const PutHandler = () => {
@@ -223,7 +247,7 @@ function Detail() {
                   <DetailContentButton onClick={() => DetailDeleteHandler(pam.id)}>삭제하기</DetailContentButton>
                 </>
                 )}
-                <DetailContentButton onClick={() => postLike(pam.id)}>좋아요</DetailContentButton>
+                <DetailContentButton onClick={() => likeMutate.mutate(pam.id)}>좋아요</DetailContentButton>
               </DetailcontentLeftButtonBox>
             </DetailContentLeftBox>
             <DetailContentRightBox>
@@ -244,10 +268,25 @@ function Detail() {
         {!phase && (
           <DetailPutContainer>
             <InputContentLeftBox>
-              <InputContentLeftImage imageUrl={data.data.images} />
+            {prevImageRef.current && (
+              <img
+              src = {prevImageRef.current}
+              alt="Previous Image"
+              style={{ Width: "240px", Height: "400px" }}
+              onLoad={handelPrevImageLoad} />
+            )}
+            {preview && preview !== prevImageRef.current && (
+              <img
+              src = {preview}
+              alt="Preview"
+              style={{ Width: "240px", Height: "400px" }}/>
+            )}
+              
               <InputcontentLeftButtonBox>
                 <form onSubmit={PutHandler}></form>
+                
                 <input type="file" accept="image/jpeg, image/png" onChange={PutImageHandler}></input>
+
                 <DetailContentButton onClick={ PutHandler}>수정완료</DetailContentButton>
                 <DetailContentButton onClick={() => setphase(true)}>취소하기</DetailContentButton>
               </InputcontentLeftButtonBox>
@@ -431,6 +470,12 @@ background-image: url(${props => props.imageUrl});
   background-size: cover;
   background-repeat: no-repeat;
   background-position:center center;
+  `
+const putContentLeftImage = styled.div`
+image{
+  width: 400px;
+  height: 240px;
+}
   `
 const InputcontentLeftButtonBox = styled.div`
   width: 400px;

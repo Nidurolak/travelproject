@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { RandomList } from "../api/Main";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { mytextlist } from "../api/Main";
 import { getCookie } from "../util/cookie";
+import HeadBar from "../components/header/Header";
 
 const Main = () => {
   const items = useQuery('items', RandomList);
@@ -12,6 +13,7 @@ const Main = () => {
   const [myItems, setMyItems] = useState([]);
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
+  const navi = useNavigate()
 
   useEffect(() => {
     if (lists.data) {
@@ -20,6 +22,10 @@ const Main = () => {
   }, [lists.data]);
 
   const handleMyItems = () => {
+    if (!token) {
+    alert("로그인이 필요합니다.");
+    navi("/login")
+  }
     setShowMyItems(true);
     lists.refetch();
   };
@@ -40,15 +46,20 @@ const Main = () => {
     );
   }
 
-  return (
+  const changeHandler = (event) => {
+    console.log("adada")
+    console.log(event.value)
+  }
+  return (<>
+    <HeadBar></HeadBar>
     <Wrapper>
       <Box>
-        <Button>게시물 작성</Button>
       <Link to="/write">
   <Button>게시물 작성</Button>
+  </Link>
       </Box>
       <ButtonsWrapper>
-        <select>
+        <select onChange={() => changeHandler()}>
           <option value="0">--여기서 선택하세요--</option>
           <option value="1">0~10</option>
           <option value="2">10~20</option>
@@ -78,6 +89,7 @@ const Main = () => {
         )}
       </ItemsWrapper>
     </Wrapper>
+  </>
   );
 };
 

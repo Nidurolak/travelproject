@@ -43,19 +43,5 @@ const mytextlist = async () => {
  }
 };
 
-// try {
-//   const response = await axios.post("http://sparta-kdh.kro.kr/api/travel/mylist", data, {
-//   headers: {
-//   Authorization: token,
-//   "Content-Type": "multipart/form-data",
-//   },
-//   });
-//   alert(
-//   response
-//   );
-//   } catch (e) {
-//   console.log("postStore", e);
-//   }
-
 
 export { RandomList,mytextlist };
