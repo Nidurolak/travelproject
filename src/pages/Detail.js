@@ -192,7 +192,10 @@ function Detail() {
   }
 
   function handelPrevImageLoad(){
-    prevImageRef.current = preview
+    if(preview != null){
+      console.log("tqtqtqtqtqqttqtqtq")
+      prevImageRef.current = preview
+    }
   }
 
   const PutHandler = () => {
@@ -269,12 +272,12 @@ function Detail() {
         {!phase && (
           <DetailPutContainer>
             <InputContentLeftBox>
-            {prevImageRef.current && preview !== prevImageRef.current &&(
+            {!preview &&(
               <img
               src = {prevImageRef.current}
               alt="Previous Image"
               style={{ width: "400px", height: "240px" }}
-              onLoad={handelPrevImageLoad} />
+              />
             )}
             {preview && preview !== prevImageRef.current && (
               <img

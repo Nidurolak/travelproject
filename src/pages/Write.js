@@ -54,6 +54,8 @@ function Write() {
         <DetailContentLeftBox>
 
         </DetailContentLeftBox>
+
+        
         <DetailContentRightBox>
           
         <PutNameInput placeholder="30자 미만으로 적어주세요" maxLength={29}  onChange={TitleTextHandler}></PutNameInput>
