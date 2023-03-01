@@ -74,7 +74,7 @@ function Detail() {
   const [putBudget, SetputBudget] = useState()
   const [putImage, setPutImage] = useState(null)
   const [preview, setPreview] = useState("");
-  let prevImageRef = ""
+  let prevImageRef = useRef()
   const PutContentTextHandler = (event) => {
     SetPutContentText(event.target.value)
   }
@@ -133,17 +133,18 @@ function Detail() {
         //setPutImage(res.data.images)
         console.log(dataset)
       }
+      prevImageRef.current = res.data.images;
     }
   })
-  prevImageRef = useRef(
-    data.data.images
-    );
+  
+  
   if (isLoading) {
     return <div>로딩중.........로딩중.........딩중.........로딩중.........</div>
   }
   if (isError) {
     return <div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
+
   console.log(putContentText)
   console.log(putTitleText)
   console.log(putBudget)
@@ -268,18 +269,18 @@ function Detail() {
         {!phase && (
           <DetailPutContainer>
             <InputContentLeftBox>
-            {prevImageRef.current && (
+            {prevImageRef.current && preview !== prevImageRef.current &&(
               <img
               src = {prevImageRef.current}
               alt="Previous Image"
-              style={{ Width: "240px", Height: "400px" }}
+              style={{ width: "400px", height: "240px" }}
               onLoad={handelPrevImageLoad} />
             )}
             {preview && preview !== prevImageRef.current && (
               <img
               src = {preview}
               alt="Preview"
-              style={{ Width: "240px", Height: "400px" }}/>
+              style={{ width: "400px", height: "240px" }}/>
             )}
               
               <InputcontentLeftButtonBox>
