@@ -90,21 +90,21 @@ const Main = () => {
           {showMyItems && myItems.length > 0 ? (
             myItems.map((item) => (
               <Item key={item.id}>
-                <Link to={`/detail/${item.id}`}>
-                  <ItemImage imageUrl={item.images} />
-                </Link>
-              </Item>
-            ))
-          ) : (
-            items.data?.data?.data?.map((item) => (
-              <Item key={item.id}>
                 <Link to={`/detail/${item.id}`} style={{ textDecoration: "none" }} >
                   <ItemImage imageUrl={item.images} >
                   <div>💗:{item.likeCount}</div>
                     </ItemImage>
                 </Link>
-                <div>{item.title}</div>
-                
+              </Item>
+            ))
+          ) : (
+            items.data?.data?.data?.map((item) => (
+             <Item key={item.id}>
+                <Link to={`/detail/${item.id}`} style={{ textDecoration: "none" }} >
+                  <ItemImage imageUrl={item.images} >
+                  <div>💗:{item.likeCount}</div>
+                    </ItemImage>
+                </Link>
               </Item>
             ))
           )}
