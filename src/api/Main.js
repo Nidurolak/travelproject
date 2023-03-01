@@ -33,12 +33,29 @@ instance.interceptors.request.use(
   }
 );
 
-const mytextlist = async (data) => {
-  const res = await instance.post(
+const mytextlist = async () => {
+ try{ const res = await axios.get(
     "http://sparta-kdh.kro.kr/api/travel/mylist"
   );
   return res;
+ } catch(error){
+  console.log('mytextlist',error);
+ }
 };
+
+// try {
+//   const response = await axios.post("http://sparta-kdh.kro.kr/api/travel/mylist", data, {
+//   headers: {
+//   Authorization: token,
+//   "Content-Type": "multipart/form-data",
+//   },
+//   });
+//   alert(
+//   response
+//   );
+//   } catch (e) {
+//   console.log("postStore", e);
+//   }
 
 
 export { RandomList,mytextlist };

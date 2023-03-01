@@ -7,34 +7,38 @@ import { useState } from "react";
 import { mytextlist } from "../api/Main";
 
 const Main = () => {
-  const [myTextList, setMyTextList] = useState(null);
+  // const [myTextList, setMyTextList] = useState(null);
+  const items = useQuery('items', RandomList);
+  const lists= useQuery('lists', mytextlist);
 
-  const { isLoading, isError, data, refetch } = useQuery("items", RandomList);
+
+//   const { data } = useQuery(["lists", token], () =>
+//   mytextlist(token)
+// );
+
+
+  // console.log(lists);
   
+  if (items.isLoading || lists.isLoading) {
+    return (
+      <div>
+        로딩중...
+      </div>
+    );
+  } else if (items.isError || lists.isError) {
+    return (
+      <div>
+        에러가 발생했습니다.
+      </div>
+    );
+  }
   
-
-  if (isLoading) {
-    return (
-      <div>
-        로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........로딩중.........
-      </div>
-    );
-  }
-  if (isError) {
-    return (
-      <div>
-        에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!
-      </div>
-    );
-  }
-  if (!data || !data.data) {
-    return (
-      <div>
-        데이터가 없습니다.
-      </div>
-    );
-  }
-
+  // const handleMyTextList = () => {
+  //   if (lists.data) {
+  //     setMyTextList(lists.data);
+  //   }
+  // };
+  
   return (
 
     <Wrapper>
@@ -49,11 +53,12 @@ const Main = () => {
           <option value="3">20~30</option>
           <option value="4">30~40</option>
         </select>
-        <button onClick={() => refetch()}>새로고침</button>
-        <button onClick={() => setMyTextList()}>내가 쓴글 보기</button>
+        <button onClick={() => items.refetch()}>새로고침</button>
+        <button >내가 쓴글 보기</button>
       </ButtonsWrapper>
       <ItemsWrapper>
-        {data.data.data.map((item) => {
+        {items.isLoading === false && items?.data?.data?.data?.map((item) => {
+          // console.log(item);
           return (
             <Item key={item.id}>
               <Link to={`/detail/${item.id}`}>
@@ -63,16 +68,16 @@ const Main = () => {
           );
         })}
       </ItemsWrapper>
-      {myTextList && (
+      {/* {myTextList && ( */}
         <div>
           <h2>내가 쓴 글 목록</h2>
           <ul>
-            {myTextList.map((text) => (
+            {/* {myTextList.map((text) => (
               <li key={text.id}>{text.content}</li>
-            ))}
+            ))} */}
           </ul>
         </div>
-      )}
+      
     </Wrapper>
   );
 };
