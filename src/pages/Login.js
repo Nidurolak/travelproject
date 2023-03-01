@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { isLogin } from "../redux/modules/loginSlice";
 import HeadBar from "../components/header/Header";
+import moment from "moment/moment";
 
 function Login() {
   const [username, setusername] = useState("")
@@ -50,8 +51,8 @@ function Login() {
       console.log(res.data.data.token)
       if(status == true){
         window.alert('로그인 성공!')
-        setCookie("wow", res.data.data.token, {path: "/", sameSite:"strict"})
-        dispatch(isLogin({username : username, usernickname: res.data.data.nickname}))
+        const expires =  moment().add('10','m').toDate()
+        setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
         navi("/write")
       }
     }

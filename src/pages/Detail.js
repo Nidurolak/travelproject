@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import { getDetail, deleteComment, deleteDetail, postComment } from "../api/Detail";
+import { getDetail, deleteComment, deleteDetail, postComment, putCotents } from "../api/Detail";
 import { useNavigate, useParams } from "react-router-dom";
 import { Cookies, useCookies } from 'react-cookie';
 import HeadBar from "../components/header/Header";
@@ -69,15 +69,38 @@ function Detail() {
   const queryclient = useQueryClient();
   const navi = useNavigate()
   const { userName, userNickName } = useSelector((state) => state.login)
+  const [putContentText, SetPutContentText] = useState()
+  const [putTitleText, SetputTitleText] = useState()
+  const [putBudget, SetputBudget] = useState()
+  const [putImage, setPutImage] = useState(null)
+
+  const PutContentTextHandler = (event) => {
+    SetPutContentText(event.target.value)
+  }
+  const PutTitleTextHandler = (event) => {
+    SetputTitleText(event.target.value)
+  }
+  const PutBudgetHandler = (event) => {
+    SetputBudget(event.target.value)
+  }
+
+  const PutImageHandler = (event) =>{
+    const selectedFile = event.target.files[0]
+    setPutImage(selectedFile)
+  }
 
   const deleteMutate = useMutation(deleteDetail, {
     onSuccess: () => {
       queryclient.invalidateQueries("getDetail");
     }
   })
-  // const addMutate = useMutation(postComment)
-
   const addMutate = useMutation(postComment, {
+    onSuccess: (data) => {
+      window.alert("댓글 작성 성공")
+      window.location.reload()
+    },
+  })
+  const putMutate = useMutation(putCotents, {
     onSuccess: (data) => {
       window.alert("댓글 작성 성공")
       window.location.reload()
@@ -96,8 +119,13 @@ function Detail() {
     onSuccess: (res) => {
 
       if (res.data.comments.length > 0) {
-        console.log(res.data.comments)
+        //console.log(res.data)
         setdataset(res.data.comments)
+        SetPutContentText(res.data.content)
+        SetputTitleText(res.data.title)
+        SetputBudget(res.data.budget)
+        setPutImage(res.data.images)
+        console.log(dataset)
       }
     }
   })
@@ -107,13 +135,17 @@ function Detail() {
   if (isError) {
     return <div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
+  console.log(putContentText)
+  console.log(putTitleText)
+  console.log(putBudget)
+  console.log(putImage)
 
 
   const DetailDeleteHandler = (props) => {
     deleteMutate.mutate(pam.id)
     queryclient.invalidateQueries();
   }
-  const CommentSubmitHandler = (event) => {
+  const CommentSubmitHandler = () => {
     if (getCookie('wow') != null) {
       console.log("쿠키 있네?")
       const data = {
@@ -129,7 +161,25 @@ function Detail() {
       window.alert("로그인이 필툐한 기능입니다.")
       navi("/login")
     }
+  }
 
+  const PutHandler = () => {
+    const data = new FormData()
+    data.append('title', putTitleText)
+    data.append('content', putContentText)
+    data.append('images', putImage)
+    data.append('budget', 1)
+    //data.append('pam', pam.id)
+    const box = {
+      formdata : data,
+      pam : pam.id
+    }
+    for (const [key, value] of data.entries()) {
+      console.log(key, value);
+    }
+    console.log(putTitleText)
+    console.log(putContentText)
+    putMutate.mutate(box)
   }
 
   const phasebutton = true
@@ -148,10 +198,9 @@ function Detail() {
     case 4:
       budgetCase = "10 ~ 30 만원"
       break;
-      default:
-        break;
+    default:
+      break;
   }
-
   return (<>
     <HeadBar></HeadBar>
     <Container>
@@ -162,21 +211,21 @@ function Detail() {
               <DetailContentLeftImage imageUrl={data.data.images} />
               <DetailcontentLeftButtonBox>
                 {(getCookie('wow') != null) && (userNickName === data.data.nickname) && (<>
-                <DetailContentButton onClick={() => setphase(false)}>수정하기</DetailContentButton>
-                <DetailContentButton onClick={() => DetailDeleteHandler(pam.id)}>삭제하기</DetailContentButton>
+                  <DetailContentButton onClick={() => setphase(false)}>수정하기</DetailContentButton>
+                  <DetailContentButton onClick={() => DetailDeleteHandler(pam.id)}>삭제하기</DetailContentButton>
                 </>
-              )}
+                )}
                 <DetailContentButton>좋아요</DetailContentButton>
               </DetailcontentLeftButtonBox>
             </DetailContentLeftBox>
             <DetailContentRightBox>
               <h2>타이틀 : {data.data.title}</h2>
               <NicknameAndDateBox>
-              <h3>작성자 : {data.data.nickname}</h3>
-              <h4>작성일 : {data.data.createdAt}</h4>
+                <h3>작성자 : {data.data.nickname}</h3>
+                <h4>작성일 : {data.data.createdAt}</h4>
               </NicknameAndDateBox>
               <DetailContentBox>
-              <h3>내용 : {data.data.content}</h3>
+                <h3>내용 : {data.data.content}</h3>
               </DetailContentBox>
               <h4>예산 : {budgetCase}</h4>
               <h2>좋아요 : {data.data.likeCount}</h2>
@@ -189,11 +238,20 @@ function Detail() {
             <InputContentLeftBox>
               <InputContentLeftImage imageUrl={data.data.images} />
               <InputcontentLeftButtonBox>
-                <input type="file" accept="image/jpeg, image/png"></input>
-                <DetailContentButton onClick={() => setphase(true)}>수정완료</DetailContentButton>
+                <form onSubmit={PutHandler}></form>
+                <input type="file" accept="image/jpeg, image/png" onChange={PutImageHandler}></input>
+                <DetailContentButton onClick={ PutHandler}>수정완료</DetailContentButton>
                 <DetailContentButton onClick={() => setphase(true)}>취소하기</DetailContentButton>
               </InputcontentLeftButtonBox>
-            </InputContentLeftBox></DetailPutContainer>
+            </InputContentLeftBox>
+            <DetailContentRightBox>
+
+              <PutNameInput placeholder="30자 미만으로 적어주세요" maxLength={29} defaultValue={data.data.title} onChange={PutTitleTextHandler}></PutNameInput>
+              <PutInput placeholder="300자 미만으로 적어주세요" maxLength={299} defaultValue={data.data.content} onChange={PutContentTextHandler}></PutInput>
+
+            </DetailContentRightBox>
+
+          </DetailPutContainer>
         )}
         <CommentInputBox>
           <CommentInput onChange={commentHandler} placeholder="100자 미만으로 적어주세요" maxLength={99}></CommentInput>
@@ -281,6 +339,34 @@ align-items: center;
 const CommentInput = styled.textarea`
 width: 80%;
 height: 75px ;
+background-color: wheat;
+border-radius: 5px;
+margin-left: 3px;
+box-sizing: border-box;
+
+text-align: left;
+vertical-align: top;
+white-space: pre-wrap;
+word-wrap: break-word;
+resize: none;
+`
+const PutInput = styled.textarea`
+width: 530px;
+height: 400px ;
+background-color: wheat;
+border-radius: 5px;
+margin-left: 3px;
+box-sizing: border-box;
+
+text-align: left;
+vertical-align: top;
+white-space: pre-wrap;
+word-wrap: break-word;
+resize: none;
+`
+const PutNameInput = styled.textarea`
+width: 530px;
+height: 70px ;
 background-color: wheat;
 border-radius: 5px;
 margin-left: 3px;

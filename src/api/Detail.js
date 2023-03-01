@@ -25,9 +25,14 @@ const getDetail = async (id) => {
     const requestJson = {
       comment : comment.comment
     }
-
-    console.log(requestJson)
     await instance.post(`http://sparta-kdh.kro.kr/api/travel/${comment.pam}/comment`, requestJson)
+  }
+
+  const putCotents = async(data) => {
+    console.log(data.pam)
+    console.log(data.formdata)
+    const res = await instance.put(`http://sparta-kdh.kro.kr/api/travel/${data.pam}`, data.formdata)
+    return res;
   }
   
   const deleteComment = async(data) =>{
@@ -39,4 +44,4 @@ const getDetail = async (id) => {
      const res = await instance.delete(`http://sparta-kdh.kro.kr/api/travel/${pam}`)
      return res;
   }
-export { getDetail,deleteComment, deleteDetail, postComment};
+export { getDetail,deleteComment, deleteDetail, postComment, putCotents};
