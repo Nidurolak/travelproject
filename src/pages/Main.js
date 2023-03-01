@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import { RandomList } from "../api/Main";
-import { Link } from "react-router-dom";
-import { mytextlist } from "../api/Main";
+import { useMutation, useQuery } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { RandomList,mytextlist, listfilter } from "../api/Main";
 import { getCookie } from "../util/cookie";
+import HeadBar from "../components/header/Header";
+
 
 const Main = () => {
   const items = useQuery('items', RandomList);
@@ -12,6 +13,8 @@ const Main = () => {
   const [myItems, setMyItems] = useState([]);
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
+  const navi = useNavigate()
+  
 
   useEffect(() => {
     if (lists.data) {
@@ -19,7 +22,25 @@ const Main = () => {
     }
   }, [lists.data]);
 
+  // const [selectedValue, setSelectedValue] = useState("0");
+  const filterItems =  useMutation((selectedValue) => listfilter(selectedValue));
+
+  const handleSelectChange = (e) => {
+    // setMyItems(e.target.value);
+    const data = {budgetFilter : e.target.value}
+    const res=filterItems.mutate(data);
+    console.log(res);
+
+    // console.log(e.target.value)
+  };
+
+ 
   const handleMyItems = () => {
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navi("/login")
+      return;
+      }
     setShowMyItems(true);
     lists.refetch();
   };
@@ -40,15 +61,38 @@ const Main = () => {
     );
   }
 
-  return (
-    <Wrapper>
-      <Box>
-        <Button>게시물 작성</Button>
+  // try{
+  //   const res = await mutate.mutateAsync(data)
+  //   const {status, message} = res.data
+  //   console.log(res.data.data.token)
+  //   if(status == true){
+  //   console.log(res.data.data.token)
+  //   window.alert('로그인 성공!')
+  //   const expires = moment().add('60','m').toDate()
+  //   setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
+  //   navi("/write")
+    
+  //   }
+  //   }
+  //   catch(error){
+  //   window.alert(error.response.data.message)
+  //   console.log(error)
+  //   }
+
+
+
+
+
+  return (<>
+  <HeadBar/>
+  <Wrapper>
+      <Box>   
       <Link to="/write">
   <Button>게시물 작성</Button>
+   </Link>
       </Box>
       <ButtonsWrapper>
-        <select>
+      <select  onChange={handleSelectChange}>
           <option value="0">--여기서 선택하세요--</option>
           <option value="1">0~10</option>
           <option value="2">10~20</option>
@@ -78,6 +122,7 @@ const Main = () => {
         )}
       </ItemsWrapper>
     </Wrapper>
+  </>
   );
 };
 
