@@ -51,7 +51,7 @@ function Login() {
       console.log(res.data.data.token)
       if(status == true){
         window.alert('로그인 성공!')
-        const expires =  moment().add('10','m').toDate()
+        const expires =  moment().add('60','m').toDate()
         setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
         navi("/write")
       }

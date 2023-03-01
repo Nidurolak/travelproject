@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import { getDetail, deleteComment, deleteDetail, postComment, putCotents } from "../api/Detail";
+import { getDetail, deleteComment, deleteDetail, postComment, putCotents, postLike } from "../api/Detail";
 import { useNavigate, useParams } from "react-router-dom";
 import { Cookies, useCookies } from 'react-cookie';
 import HeadBar from "../components/header/Header";
@@ -102,7 +102,14 @@ function Detail() {
   })
   const putMutate = useMutation(putCotents, {
     onSuccess: (data) => {
-      window.alert("댓글 작성 성공")
+      window.alert("게시글 수정 성공")
+      window.location.reload()
+    },
+  })
+
+  const likeMutate = useMutation(postLike, {
+    onSuccess: (data) => {
+      window.alert("좋아요!")
       window.location.reload()
     },
   })
@@ -124,7 +131,7 @@ function Detail() {
         SetPutContentText(res.data.content)
         SetputTitleText(res.data.title)
         SetputBudget(res.data.budget)
-        setPutImage(res.data.images)
+        //setPutImage(res.data.images)
         console.log(dataset)
       }
     }
@@ -167,9 +174,8 @@ function Detail() {
     const data = new FormData()
     data.append('title', putTitleText)
     data.append('content', putContentText)
-    data.append('images', putImage)
+      data.append('images', putImage)
     data.append('budget', 1)
-    //data.append('pam', pam.id)
     const box = {
       formdata : data,
       pam : pam.id
@@ -215,7 +221,7 @@ function Detail() {
                   <DetailContentButton onClick={() => DetailDeleteHandler(pam.id)}>삭제하기</DetailContentButton>
                 </>
                 )}
-                <DetailContentButton>좋아요</DetailContentButton>
+                <DetailContentButton onClick={() => postLike(pam.id)}>좋아요</DetailContentButton>
               </DetailcontentLeftButtonBox>
             </DetailContentLeftBox>
             <DetailContentRightBox>
