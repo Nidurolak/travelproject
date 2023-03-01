@@ -98,7 +98,7 @@ const Main = () => {
           ) : (
             items.data?.data?.data?.map((item) => (
               <Item key={item.id}>
-                <Link to={`/detail/${item.id}`}>
+                <Link to={`/detail/${item.id}`} style={{ textDecoration: "none" }} >
                   <ItemImage imageUrl={item.images} >
                   <div>💗:{item.likeCount}</div>
                     </ItemImage>
