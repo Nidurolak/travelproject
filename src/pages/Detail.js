@@ -153,20 +153,24 @@ function Detail() {
     queryclient.invalidateQueries();
   }
   const CommentSubmitHandler = () => {
-    if (getCookie('wow') != null) {
-      console.log("쿠키 있네?")
-      const data = {
-        pam: pam.id,
-        comment,
-      }
-      addMutate.mutate(data)
-      //window.alert("댓글 작성 성공")
-      //window.location.reload()
+    if(comment != null){
+      window.alert("댓글에 내용을 적어주세요.")
     }
-    else {
-      console.log("쿠키 없네?")
-      window.alert("로그인이 필툐한 기능입니다.")
-      navi("/login")
+    else{
+      if (getCookie('wow') != null) {
+        const data = {
+          pam: pam.id,
+          comment,
+        }
+        addMutate.mutate(data)
+        //window.alert("댓글 작성 성공")
+        //window.location.reload()
+      }
+      else {
+        console.log("쿠키 없네?")
+        window.alert("로그인이 필툐한 기능입니다.")
+        navi("/login")
+      }
     }
   }
   
