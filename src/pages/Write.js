@@ -47,30 +47,35 @@ function Write() {
   console.log(data)},}
   )
   const submitPost = async (event)=> {
-    const formdata = new FormData()
-    formdata.append('title', title)
-    formdata.append('content', content)
-    formdata.append('budget', budget)
-    formdata.append('images', postImages)
-
-    console.log(formdata)
-
-    console.log("ADsasdasd")
-    for (const [key, value] of formdata.entries()) {
-      console.log(key, value);
+    if(title == null || content == null || postImages == null){
+      window.alert("제목, 내용물, 이미지가 모두 있어야 합니다!")
     }
-    try{
-      const res = await mutate.mutateAsync(formdata)
-      console.log(res)
-      const {message} = res.data
-
-      console.log(message)
-
+    else{
+      const formdata = new FormData()
+      formdata.append('title', title)
+      formdata.append('content', content)
+      formdata.append('budget', budget)
+      formdata.append('images', postImages)
+  
+      console.log(formdata)
+  
+      console.log("ADsasdasd")
+      for (const [key, value] of formdata.entries()) {
+        console.log(key, value);
+      }
+      try{
+        const res = await mutate.mutateAsync(formdata)
+        console.log(res)
+        const {message} = res.data
+  
+        console.log(message)
+  
+      }
+      catch(error){
+          console.log("afgaagaag")
+      }
+  
     }
-    catch(error){
-        console.log("afgaagaag")
-    }
-
   }
 
   return (<>
