@@ -26,17 +26,21 @@ const Main = () => {
   const filterItems =  useMutation((selectedValue) => listfilter(selectedValue));
 
   const handleSelectChange = (e) => {
-    const data = {budgetFilter: e.target.value}
-    filterItems.mutate(data, {
-      onSuccess: (data) => {
-        console.log(data);
-        setMyItems(data.data.data);
-        setShowMyItems(true);
-      },
-      onError: (error) => {
-        console.log(error);
-      }
-    });
+    const budgetFilter = e.target.value;
+    if (showMyItems) {
+      const data = { budgetFilter };
+      filterItems.mutate(data, {
+        onSuccess: (data) => {
+          console.log(data);
+          setMyItems(data.data.data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } else {
+      items.refetch({ budgetFilter });
+    }
   };
   
  
@@ -94,6 +98,7 @@ const Main = () => {
                   <ItemImage imageUrl={item.images} >
                   <div>💗:{item.likeCount}</div>
                     </ItemImage>
+                    <div>{item.title}</div>
                 </Link>
               </Item>
             ))
@@ -104,6 +109,7 @@ const Main = () => {
                   <ItemImage imageUrl={item.images} >
                   <div>💗:{item.likeCount}</div>
                     </ItemImage>
+                    <div>{item.title}</div>
                 </Link>
               </Item>
             ))
@@ -119,6 +125,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
 const Box = styled.div`
   position: relative;
   width: 90%;
@@ -130,6 +137,7 @@ const Box = styled.div`
   justify-content: center;
   align-items: flex-end;
 `;
+
 const Button = styled.button`
   padding: 10px 20px;
   font-size: 16px;
@@ -137,12 +145,14 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 20px;
 `;
+
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
   width: 35%;
 `;
+
 const ItemsWrapper = styled.div`
   border: 1px solid black;
   display: flex;
@@ -151,12 +161,14 @@ const ItemsWrapper = styled.div`
   margin: 20px auto;
   padding: 50px;
 `;
+
 const Item = styled.div`
   width: 22%;
   height: 150px;
   border: 1px solid black;
   margin: 10px;
 `;
+
 const ItemImage = styled.div`
   width: 100%;
   height: 100%;
@@ -165,4 +177,5 @@ const ItemImage = styled.div`
   background-position: center;
   position: relative;
 `;
+
 export default Main;
