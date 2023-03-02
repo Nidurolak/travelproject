@@ -45,6 +45,7 @@ function HeadBar() {
   function LogOut() {
     removeCookie('wow')
     window.alert("로그아웃 했습니다.")
+    window.location.reload()
   }
 
   return (<>
