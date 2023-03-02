@@ -90,9 +90,7 @@ const Main = () => {
       <Wrapper>
         <Box>
           <img src={imageUrl} alt=""/>
-         
           <Button onClick={handleWriteClick}>게시물 작성</Button>
-          
         </Box>
         <ButtonsWrapper>
           <select onChange={handleSelectChange}>
