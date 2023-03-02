@@ -43,11 +43,11 @@ function ShowReples(props) {
   return (<>
     <DetailRepleBox>
       <RepleReftContainer>
-        <RepleComment bg={"gold"} height={"25"} width={"300"} fontsize={"14"}>
+        <RepleComment bg={"#afddf1"} height={"25"} width={"300"} fontsize={"14"}>
           <div>{props.nickname}</div>
           <div>{props.createdAt}</div>
         </RepleComment>
-        <RepleComment bg={"gray"} height={"90"} width={"550"} fontsize={"22"}>
+        <RepleComment bg={"white"} height={"90"} width={"550"} fontsize={"22"}>
           {props.comment}
         </RepleComment>
       </RepleReftContainer>{
@@ -372,8 +372,9 @@ flex-direction: column;
 justify-content: flex-end;
 width: 1200px;
 max-width: 80%;
+border-radius: 30px;
 height: 600px;
-background-color: rgb(230, 230, 230);
+background-color: #ecf7fc;
   & > *:not(:first-child) {
     margin-top: 15px;
   }
@@ -397,7 +398,7 @@ padding-right: 10px;
 width: 1150px;
 max-width: 80%;
 height: 80px;
-border: 4px solid black;
+border: 4px solid #9dd6ee;
 border-radius: 7px;
 display: flex;
 justify-content: space-between;
@@ -406,10 +407,11 @@ align-items: center;
 const CommentInput = styled.textarea`
 width: 80%;
 height: 75px ;
-background-color: wheat;
+background-color: #f0f8fc;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
+border:#afddf1;
 
 text-align: left;
 vertical-align: top;
@@ -420,7 +422,7 @@ resize: none;
 const PutInput = styled.textarea`
 width: 530px;
 height: 400px ;
-background-color: wheat;
+background-color: white;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
@@ -434,7 +436,7 @@ resize: none;
 const PutNameInput = styled.textarea`
 width: 530px;
 height: 70px ;
-background-color: wheat;
+background-color: white;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
@@ -447,7 +449,7 @@ resize: none;
 `
 const CommentSubmit = styled.button`
 background-image : url(/check.jpg);
-border: 3px solid gold;
+border: 3px solid #afddf1;
 border-radius: 5px;
 width: 50px;
 height: 50px;
@@ -461,7 +463,7 @@ flex-wrap: wrap;
 align-items: center;
 justify-content: flex-end;
 padding: 10px;
-background-color: rgb(210, 210, 210);
+background-color: rgb(110, 100, 255);
 `
 
 const DetailPutContainer = styled.div`
@@ -471,7 +473,8 @@ flex-wrap: wrap;
 align-items: center;
 justify-content: flex-end;
 padding: 10px;
-background-color: rgb(210, 210, 210);
+background-color: #98c1f3;
+border-radius: 15px;
 `
 const InputContentLeftBox = styled.div`
 display: flex;
@@ -481,7 +484,7 @@ justify-content: center;
 align-items: center;
 width:550px;
 height: 400px;
-background-color: rgb(170, 170, 170);
+background-color: #ecf7fc;
 `
 const InputContentLeftImage = styled.div`
 background-image: url(${props => props.imageUrl});
@@ -504,7 +507,7 @@ const InputcontentLeftButtonBox = styled.div`
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-  background-color: pink;
+  background-color: whitesmoke;
   `
 
 const DetailContentLeftBox = styled.div`
@@ -515,7 +518,7 @@ justify-content: center;
 align-items: center;
 width:550px;
 height: 400px;
-background-color: rgb(170, 170, 170);
+background-color:#ecf7fc;
 `
 
 const DetailContentLeftImage = styled.div`
@@ -533,12 +536,12 @@ const DetailcontentLeftButtonBox = styled.div`
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-  background-color: pink;
+  background-color:#ecf7fc;
   `
 const DetailContentButton = styled.button`
 width: 80px;
 height: 40px;
-border: 3px solid gold;
+border: 3px solid #98c1f3;
 border-radius: 5px;
 `
 const DetailContentRightBox = styled.div`
@@ -549,7 +552,7 @@ justify-content: flex-start;
 align-items: flex-start;
 width: 550px;
 height: 400px;
-background-color: rgb(170, 170, 170);
+background-color: #98c1f3;
 > * {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -590,11 +593,12 @@ justify-content: space-between;
 `
 const RepleDeleteBox = styled.button`
 background-image : url(/delete.png);
-border: 3px solid gold;
+border: none;
 border-radius: 5px;
 width: 50px;
 height: 50px;
 background-size: cover;
+background-color: white;
 `
 
 export default Detail;
