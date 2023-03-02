@@ -63,7 +63,7 @@ const Main = () => {
   // console.log(myItems);
 
   const handleWriteClick = () => {
-    if (getCookie("wow")!==null) {
+    if (token==null) {
       alert("로그인이 필요합니다.");
       navi("/login");
     } else {
@@ -90,9 +90,7 @@ const Main = () => {
       <Wrapper>
         <Box>
           <img src={imageUrl} alt=""/>
-         
           <Button onClick={handleWriteClick}>게시물 작성</Button>
-          
         </Box>
         <ButtonsWrapper>
           <select onChange={handleSelectChange}>
