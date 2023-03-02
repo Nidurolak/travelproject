@@ -25,7 +25,7 @@ function HeadBar() {
   }
   if(isError){
     return<div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
-  }
+  }removeCookie
  console.log(data)*/
   const CheckUser = async () => {
     try {
@@ -45,6 +45,7 @@ function HeadBar() {
   function LogOut() {
     removeCookie('wow')
     window.alert("로그아웃 했습니다.")
+    navi("/")
     window.location.reload()
   }
 
