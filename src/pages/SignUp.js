@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { signup } from "../api/SignUp";
 import { useNavigate } from "react-router-dom";
+import HeadBar from "../components/header/Header";
 
 function Signup() {
   const [username, setusername] = useState("");
@@ -73,7 +74,8 @@ function Signup() {
     }
   };
 
-  return (
+  return (<>
+  <HeadBar></HeadBar>
     <SignupContainer>
       <form onSubmit={CheckSignUp}>
         <SignupForm>
@@ -94,6 +96,7 @@ function Signup() {
         </SignupForm>
       </form>
     </SignupContainer>
+  </>
   );
 }
 export default Signup;

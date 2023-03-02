@@ -53,13 +53,27 @@ function HeadBar() {
         <CustomButton size="icon" image="/house.png"></CustomButton>
       </Link>
       {(getCookie('wow') == null) ? (<>
+          <div>
+      <Link to={'/signup'}>
+        <LoginButton >
+          <Headertitle textcolor='black' >회원가입하기</Headertitle>
+        </LoginButton>
+      </Link>
       <Link to={'/login'}>
         <LoginButton >
           <Headertitle textcolor='black' >로그인하기</Headertitle>
         </LoginButton>
       </Link>
-      </>) : (<>
-      <Link to={'/login'}>
+          </div>
+
+
+
+      </>
+      
+      
+      
+      ) : (<>
+      <Link to={'/'}>
         <LoginButton onClick={() => LogOut()}>
           <Headertitle textcolor='black'  >로그아웃하기</Headertitle>
         </LoginButton>
