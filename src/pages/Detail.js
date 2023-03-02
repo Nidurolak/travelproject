@@ -195,16 +195,16 @@ function Detail() {
 
   switch (data.data.budget) {
     case 1:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "111111111"
       break;
     case 2:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "222222222"
       break;
     case 3:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "333333333"
       break;
     case 4:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "444444444"
       break;
     default:
       break;

@@ -14,6 +14,7 @@ const Main = () => {
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
   const navi = useNavigate()
+  const imageUrl="https://www.gousa.or.kr/sites/default/files/styles/hero_l/public/2016-10/San%20Diego%2C%20California%20road.jpg?itok=5fqyXPma";
   
 
   useEffect(() => {
@@ -23,10 +24,15 @@ const Main = () => {
   }, [lists.data]);
 
   // const [selectedValue, setSelectedValue] = useState("0");
-  const filterItems =  useMutation((selectedValue) => listfilter(selectedValue));
+  const filterItems = useMutation((selectedValue) => listfilter(selectedValue), {
+    mutationFn: (data) => {
+      return listfilter(data, { method: "POST" });
+    },
+  });
 
   const handleSelectChange = (e) => {
     const budgetFilter = e.target.value;
+    // console.log(budgetFilter);
     if (showMyItems) {
       const data = { budgetFilter };
       filterItems.mutate(data, {
@@ -39,7 +45,8 @@ const Main = () => {
         },
       });
     } else {
-      items.refetch({ budgetFilter });
+      const data = { budgetFilter };
+      items.refetch({ data });
     }
   };
   
@@ -74,7 +81,8 @@ const Main = () => {
     <>
       <HeadBar/>
       <Wrapper>
-        <Box>   
+        <Box>
+          <img src={imageUrl} alt=""/>
           <Link to="/write">
             <Button>게시물 작성</Button>
           </Link>
@@ -133,17 +141,22 @@ const Box = styled.div`
   margin: 0 auto;
   margin-top: 80px;
   border: 1px solid black;
-  display: flex;
+  display: inline-block;
   justify-content: center;
   align-items: flex-end;
+  overflow: hidden;
 `;
 
 const Button = styled.button`
+position: absolute;
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 20px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const ButtonsWrapper = styled.div`

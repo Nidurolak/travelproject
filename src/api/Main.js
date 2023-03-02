@@ -4,6 +4,7 @@ import { getCookie } from "../util/cookie";
 const RandomList = async () => {
   try {
     const res = await axios.get("http://sparta-kdh.kro.kr/api/travel");
+    console.log("get방식입니다")
     return res;
   } catch (e) {
     console.log("RandomList", e);
@@ -45,13 +46,13 @@ const mytextlist = async () => {
  }
 };
 
-const listfilter=async(data)=>{
-  const res=await instance.post(
-    "http://sparta-kdh.kro.kr/api/travel",data
-  );
+const listfilter = async (data) => {
+  console.log(data);
+  const res = await instance.post("/api/travel", data);
+  console.log("post방식입니다")
   return res;
+};
 
-}
 
 
 
