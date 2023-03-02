@@ -56,8 +56,10 @@ const Main = () => {
     alert("로그인이 필요합니다.");
     navi("/login")
   }
-    setShowMyItems(true);
-    lists.refetch();
+  lists.refetch();  
+  setShowMyItems(true);
+
+   
   };
 
   // console.log(myItems);

@@ -146,7 +146,7 @@ flex-wrap: wrap;
 align-items: center;
 justify-content: flex-end;
 padding: 10px;
-border: 4px solid rgb(110, 100, 255);
+border: 10px solid rgb(110, 100, 255);
 border-radius: 10px;
 `
 
@@ -157,6 +157,7 @@ background-color:white;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
+font-family: 'Noto Sans KR', sans-serif;
 
 text-align: left;
 vertical-align: top;
@@ -177,6 +178,7 @@ vertical-align: top;
 white-space: pre-wrap;
 word-wrap: break-word;
 resize: none;
+font-family: 'Noto Sans KR', sans-serif;
 `
 
 const DetailContentLeftBox = styled.div`
@@ -188,6 +190,7 @@ align-items: center;
 width:550px;
 height: 500px;
 background-color: skyblue;
+border-radius: 10px;
 `
 const DetailcontentSelectBox = styled.div`
   width: 400px;
@@ -198,27 +201,27 @@ justify-content: center;
 align-items: center;
 padding-left: 10px;
   background-color:rgb(110, 100, 255);
+  border-radius: 10px;
   
   `
 
 const DetailContentButton = styled.button`
   width: 80px;
   height: 40px;
-  border: 3px solid gold;
+  border: 3px solid #aef5ff;
   border-radius: 5px;
   background-color: #ffcc33;
-  color: #ffffff;
-  font-size: 16px;
+  color: black;
+  font-size: 14px;
   font-weight: bold;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 10px black;
   }
 `;
-
 const DetailContentRightBox = styled.div`
 display: flex;
 flex: 1;
@@ -227,7 +230,8 @@ justify-content: flex-start;
 align-items: center;
 width: 550px;
 height: 500px;
-background-color: rgb(170, 170, 170);
+border-radius: 10px;
+background-color:#48b4e0;
 > * {
   margin-top: 10px;
   margin-bottom: 10px;

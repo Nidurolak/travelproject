@@ -1,9 +1,0 @@
-diff a/src/pages/Main.js b/src/pages/Main.js	(rejected hunks)
-@@ -49,6 +49,7 @@
-       <Box>
-       <Link to="/write">
-   <Button>게시물 작성</Button>
-+</Link>
-       </Box>
-       <ButtonsWrapper>
-         <select>
