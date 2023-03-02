@@ -16,6 +16,7 @@
     "react-async": "^10.0.1",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-lottie": "^1.2.3",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",

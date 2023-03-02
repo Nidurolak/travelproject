@@ -9,6 +9,7 @@ function Signup() {
   const [username, setusername] = useState("");
   const [password, setuserpassword] = useState("");
   const [nickname, setnickname] = useState("");
+  const [errorText, setErrorText] = useState("");
   const navi = useNavigate();
 
   // 아이디 입력 시 이벤트
@@ -18,6 +19,7 @@ function Signup() {
 
   // 비밀번호 입력 시 이벤트
   const userPassWordChange = (event) => {
+    console.log(event);
     setuserpassword(event.target.value);
   };
 
@@ -25,6 +27,10 @@ function Signup() {
   const nicknameChange = (event) => {
     setnickname(event.target.value);
   };
+  const errorHandler = (event) => {
+    setErrorText(event);
+  };
+
 
   // 회원가입 요청 처리 함수
   const mutate = useMutation(signup, {
@@ -62,7 +68,7 @@ function Signup() {
         window.alert(message);
       }
     } catch (error) {
-      window.alert("아이디나 닉네임이 중복됩니다");
+      errorHandler(error.response.data.message);
       console.log(error);
     }
   };
@@ -83,7 +89,7 @@ function Signup() {
             onChange={userPassWordChange}
           />
           <Input type="text" placeholder="닉네임" onChange={nicknameChange} />
-          <>ID는 6~14글자 사이여야 합니다</>
+          <p>{errorText}</p>
           <SignupButton>가입하기</SignupButton>
         </SignupForm>
       </form>
@@ -103,7 +109,7 @@ const SignupForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 2px solid rgb(110, 100, 255);
   border-radius: 10px;
   padding: 30px;
 `;

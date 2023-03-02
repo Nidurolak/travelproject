@@ -120,7 +120,6 @@ justify-content: center;
 align-items: center;
 padding-top: 15px;
 padding-bottom: 15px;
-
   & > *:not(:first-child) {
     margin-top: 15px;
   }
@@ -134,7 +133,7 @@ justify-content: flex-end;
 width: 1200px;
 max-width: 80%;
 height: 600px;
-background-color: rgb(230, 230, 230);
+background-color: white;
   & > *:not(:first-child) {
     margin-top: 15px;
   }
@@ -147,13 +146,14 @@ flex-wrap: wrap;
 align-items: center;
 justify-content: flex-end;
 padding: 10px;
-background-color: rgb(210, 210, 210);
+border: 4px solid rgb(110, 100, 255);
+border-radius: 10px;
 `
 
 const PutInput = styled.textarea`
 width: 530px;
 height: 400px ;
-background-color: wheat;
+background-color:white;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
@@ -167,7 +167,7 @@ resize: none;
 const PutNameInput = styled.textarea`
 width: 530px;
 height: 70px ;
-background-color: wheat;
+background-color: white;
 border-radius: 5px;
 margin-left: 3px;
 box-sizing: border-box;
@@ -187,7 +187,7 @@ justify-content: center;
 align-items: center;
 width:550px;
 height: 500px;
-background-color: rgb(170, 170, 170);
+background-color: skyblue;
 `
 const DetailcontentSelectBox = styled.div`
   width: 400px;
@@ -197,15 +197,28 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 padding-left: 10px;
-  background-color: pink;
+  background-color:rgb(110, 100, 255);
+  
   `
 
 const DetailContentButton = styled.button`
-width: 80px;
-height: 40px;
-border: 3px solid gold;
-border-radius: 5px;
-`
+  width: 80px;
+  height: 40px;
+  border: 3px solid gold;
+  border-radius: 5px;
+  background-color: #ffcc33;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  }
+`;
+
 const DetailContentRightBox = styled.div`
 display: flex;
 flex: 1;

@@ -95,7 +95,7 @@ const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 2px solid rgb(110, 100, 255);
   border-radius: 10px;
   padding: 30px;
   /* margin-left: 900px; */

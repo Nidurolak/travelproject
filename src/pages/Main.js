@@ -14,7 +14,7 @@ const Main = () => {
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
   const navi = useNavigate()
-  const imageUrl="https://www.gousa.or.kr/sites/default/files/styles/hero_l/public/2016-10/San%20Diego%2C%20California%20road.jpg?itok=5fqyXPma";
+  const imageUrl="https://images.pexels.com/photos/1252500/pexels-photo-1252500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
   
 
   useEffect(() => {
@@ -62,6 +62,15 @@ const Main = () => {
 
   // console.log(myItems);
 
+  const handleWriteClick = () => {
+    if (getCookie("wow")!==null) {
+      alert("로그인이 필요합니다.");
+      navi("/login");
+    } else {
+      navi("/write");
+    }
+  };
+
   if (items.isLoading || lists.isLoading) {
     return (
       <div>
@@ -81,9 +90,9 @@ const Main = () => {
       <Wrapper>
         <Box>
           <img src={imageUrl} alt=""/>
-          <Link to="/write">
-            <Button  style={{ opacity: 0.7 }}>게시물 작성</Button>
-          </Link>
+         
+          <Button onClick={handleWriteClick}>게시물 작성</Button>
+          
         </Box>
         <ButtonsWrapper>
           <select onChange={handleSelectChange}>
@@ -144,6 +153,11 @@ const Box = styled.div`
   align-items: flex-end;
   overflow: hidden;
   
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const Button = styled.button`
@@ -173,7 +187,7 @@ const ButtonsWrapper = styled.div`
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     color: #555;
 
     option {
@@ -215,7 +229,9 @@ const Item = styled.div`
   border: 10px solid rgb(110, 100, 255);
   margin-top: 20px;
   margin-right: 10px;
+  margin-left:3px;
   border-radius: 10px;
+
 `;
 
 const ItemImage = styled.div`
