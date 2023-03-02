@@ -47,4 +47,11 @@ ${props => {
     background-image: ${image};
     background-size: cover;
     justify-content: ${justfy};
+    border: none;
+    background-color: white;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
   `}}`

@@ -52,7 +52,7 @@ const Main = () => {
   
  
   const handleMyItems = () => {
-    if (!token) {
+    if (token==null) {
     alert("로그인이 필요합니다.");
     navi("/login")
   }

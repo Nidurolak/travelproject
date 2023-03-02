@@ -30,8 +30,6 @@ function HeadBar() {
   const CheckUser = async () => {
     try {
       const res = await mutate.mutateAsync("adadad")
-      console.log(res.data.data.nickname)
-      console.log(")))))))))))))")
       dispatch(isLogin({ username: res.data.data.username, nickname: res.data.data.nickname }))
       //닉네임만 챙겨야한다. 
     }
@@ -41,9 +39,7 @@ function HeadBar() {
   }
 
   useEffect(() => {
-    console.log(userNickName)
     CheckUser()
-    console.log("김재우 멋쟁이")
   }, [])
 
   function LogOut() {
@@ -82,9 +78,9 @@ align-items: center;
 justify-content: space-between;
 flex-direction: row;
 height: 60px;
-background-color: rgb(80, 45, 0);
-border: 2px solid gold;
-border-radius: 3px;
+background-color: white;
+border: 9px solid rgb(110, 110, 255, 0.8);
+border-radius: 7px;
 line-height: 15px;
 padding: 10px;
 `
@@ -102,7 +98,8 @@ font-size: 15px;
 const LoginButton = styled.button`
 width: 150px;
 height: 40px;
-border: 3px solid gold;
+border: 3px solid rgb(110, 110, 255, 0.8);
 border-radius: 5px;
+background-color: white;
 `
 export default HeadBar
