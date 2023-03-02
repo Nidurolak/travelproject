@@ -18,6 +18,7 @@ instance.interceptors.request.use(
 );
 
 const makePost = async (data) => {
+  console.log(data)
     const res = await instance.post("http://sparta-kdh.kro.kr/api/travel", data);
     return res;
   };

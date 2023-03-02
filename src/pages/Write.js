@@ -13,9 +13,13 @@ import HeadBar from "../components/header/Header";
 function Write() {
   const imageref = useRef();
   const [title, setTitle] = useState("")
-  const [images, setImages] = useState("")
+  const [images, setImages] = useState()
+  const [postImages, setPostImages] = useState()
+  const [preview, setPreview] = useState()
   const [content, setContent] = useState("")
-  const [budget, setBudget] = useState(0)
+  const [budget, setBudget] = useState(1)
+  const navi = useNavigate()
+
 
   const TitleTextHandler = (event) =>{
     setTitle(event.target.value)
@@ -25,25 +29,38 @@ function Write() {
     setContent(event.target.value)
   }
   const ImageHandler = (event) => {
-    const file = imageref.current.files[0] 
+    const file = event.target.files[0]
+    console.log(file)
     const reader = new FileReader()
-    reader.readAsDataURL(file)
     reader.onloadend = () =>{
       setImages(reader.result)
     }
+    reader.readAsDataURL(file)
+    setPostImages(file)
+    console.log(reader)
+    console.log(images)
   }
 
-  const mutate = useMutation(makePost)
+  const mutate = useMutation(makePost, {onSuccess: (data) =>{
+  window.alert("게시글 작성 성공")
+  navi(`/detail/${data.data.data.id}`)
+  console.log(data)},}
+  )
   const submitPost = async (event)=> {
+    const formdata = new FormData()
+    formdata.append('title', title)
+    formdata.append('content', content)
+    formdata.append('budget', budget)
+    formdata.append('images', postImages)
+
+    console.log(formdata)
+
     console.log("ADsasdasd")
-    const data ={
-      title,
-      images,
-      content,
-      budget
+    for (const [key, value] of formdata.entries()) {
+      console.log(key, value);
     }
     try{
-      const res = await mutate.mutateAsync(data)
+      const res = await mutate.mutateAsync(formdata)
       console.log(res)
       const {message} = res.data
 
@@ -53,6 +70,7 @@ function Write() {
     catch(error){
         console.log("afgaagaag")
     }
+
   }
 
   return (<>
@@ -62,7 +80,7 @@ function Write() {
         <DetailContentContainer>
         <DetailContentLeftBox>
         <img src={images ? images :"/defaultInput.png"} alt="이미지를 가져와 주십시오"  style={{ width: "400px", height: "240px" }}/>
-        <input type="file" accept="image/jpeg, image/png" onChange={ImageHandler} ref = {imageref}></input>
+        <input type="file" accept="image/jpeg, image/png" onChange={ImageHandler}></input>
         
         <DetailcontentSelectBox>
         <h3>사용한 예산 </h3>
@@ -81,7 +99,7 @@ function Write() {
           
         <PutNameInput placeholder="30자 미만으로 적어주세요" maxLength={29}  onChange={TitleTextHandler}></PutNameInput>
         <PutInput placeholder="300자 미만으로 적어주세요" maxLength={299}  onChange={ContentTextHandler}></PutInput>
-        <DetailContentButton >작성하기</DetailContentButton>
+        <DetailContentButton onClick={submitPost}>작성하기</DetailContentButton>
         </DetailContentRightBox>
         </DetailContentContainer>
 

@@ -20,7 +20,7 @@ function ShowReples(props) {
     onSuccess: (data) => {
       window.alert("댓글 삭제 성공")
       window.location.reload()
-    },
+    }
   })
 
 
@@ -28,8 +28,6 @@ function ShowReples(props) {
   const DeleteCommentHandler = (jang) => {
     try {
       const res = deleteMutate.mutateAsync(jang)
-      console.log("dfjkcfjkfjkfmk,fmk,fmk,fk,fkfkfmk", res)
-      console.log(props)
       //props.setdataset(res.data?.data)
     }
     catch (error) {
@@ -74,6 +72,7 @@ function Detail() {
   const [putBudget, SetputBudget] = useState()
   const [putImage, setPutImage] = useState(null)
   const [preview, setPreview] = useState("");
+  const [selectValue, setSelectValue] = useState(1)
   let prevImageRef = useRef()
   const PutContentTextHandler = (event) => {
     SetPutContentText(event.target.value)
@@ -84,9 +83,6 @@ function Detail() {
   const PutBudgetHandler = (event) => {
     SetputBudget(event.target.value)
   }
-
-
-
 
   const deleteMutate = useMutation(deleteDetail, {
     onSuccess: () => {
@@ -144,12 +140,12 @@ function Detail() {
   if (isError) {
     return <div>에러!!!!!!!!에러!!!!!!!!에러!!!!!!!!</div>
   }
-
+/*
   console.log(putContentText)
   console.log(putTitleText)
   console.log(putBudget)
   console.log(putImage)
-
+*/
   const DetailDeleteHandler = (props) => {
     deleteMutate.mutate(pam.id)
     queryclient.invalidateQueries();
@@ -179,6 +175,8 @@ function Detail() {
 
     reader.onloadend = () =>{
       setPreview(reader.result)
+      console.log(reader.result)
+      console.log(reader)
     }
     console.log(event.target.files[0].name)
 
@@ -189,6 +187,7 @@ function Detail() {
       setPreview(prevImageRef.current);
       }
     setPutImage(selectedFile)
+    console.log(putImage)
   }
 
   function handelPrevImageLoad(){
@@ -198,13 +197,21 @@ function Detail() {
     }
   }
 
+  const SelectHandler = (event) =>{
+    console.log(event.target.value)
+      setSelectValue(event.target.value)
+  }
+
   const PutHandler = () => {
     const data = new FormData()
     data.append('title', putTitleText)
     data.append('content', putContentText)
+    data.append('budget', selectValue)
     if(putImage != null){
       data.append('images', putImage)
     }
+
+    console.log(putImage)
     data.append('budget', 1)
     const box = {
       formdata : data,
@@ -223,16 +230,16 @@ function Detail() {
 
   switch (data.data.budget) {
     case 1:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "30 만원 이하"
       break;
     case 2:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "30 ~ 50 만원"
       break;
     case 3:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "50 ~ 70 만원"
       break;
     case 4:
-      budgetCase = "10 ~ 30 만원"
+      budgetCase = "70 만원 이상"
       break;
     default:
       break;
@@ -293,7 +300,14 @@ function Detail() {
 
                 <DetailContentButton onClick={ PutHandler}>수정완료</DetailContentButton>
                 <DetailContentButton onClick={() => setphase(true)}>취소하기</DetailContentButton>
+        <select onChange={SelectHandler}>
+          <option value="1">30만원 미만</option>
+          <option value="2">30 ~ 50만원</option>
+          <option value="3">50~ 70 만원</option>
+          <option value="4">70만원 초과</option>
+        </select>
               </InputcontentLeftButtonBox>
+              
             </InputContentLeftBox>
             <DetailContentRightBox>
 
