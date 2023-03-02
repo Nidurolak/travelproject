@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
 import { useMutation, useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { RandomList,mytextlist, listfilter } from "../api/Main";
@@ -15,7 +18,10 @@ const Main = () => {
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
   const navi = useNavigate()
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
   const imageUrl="https://www.gousa.or.kr/sites/default/files/styles/hero_l/public/2016-10/San%20Diego%2C%20California%20road.jpg?itok=5fqyXPma";
   
 
@@ -55,9 +61,16 @@ const Main = () => {
  
   const handleMyItems = () => {
     if (!token) {
+<<<<<<< HEAD
     alert("로그인이 필요합니다.");
     navi("/login")
   }
+=======
+      alert("로그인이 필요합니다.");
+      navi("/login")
+      return;
+      }
+>>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
     setShowMyItems(true);
     lists.refetch();
   };
@@ -77,6 +90,10 @@ const Main = () => {
       </div>
     );
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
   return (
     <>
       <HeadBar/>
@@ -84,7 +101,7 @@ const Main = () => {
         <Box>
           <img src={imageUrl} alt=""/>
           <Link to="/write">
-            <Button>게시물 작성</Button>
+            <Button  style={{ opacity: 0.7 }}>게시물 작성</Button>
           </Link>
         </Box>
         <ButtonsWrapper>
@@ -145,6 +162,7 @@ const Box = styled.div`
   justify-content: center;
   align-items: flex-end;
   overflow: hidden;
+  
 `;
 
 const Button = styled.button`
@@ -157,17 +175,51 @@ position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  border: 1px solid rgb(110, 100, 255);
+  
+  
 `;
 
 const ButtonsWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  width: 35%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  select {
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #555;
+
+    option {
+      font-size: 16px;
+      color: #555;
+    }
+  }
+
+  button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(110, 100, 255);
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #555;
+    }
+  }
 `;
 
 const ItemsWrapper = styled.div`
-  border: 1px solid black;
+border-radius: 20px;
+  border: 3px solid rgb(110, 100, 255);
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -176,9 +228,10 @@ const ItemsWrapper = styled.div`
 `;
 
 const Item = styled.div`
+
   width: 22%;
   height: 150px;
-  border: 1px solid black;
+  border: 3px solid rgb(110, 100, 255);
   margin: 10px;
 `;
 

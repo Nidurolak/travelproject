@@ -10,7 +10,6 @@ const cookies = new Cookies()
 export const setCookie = (name, value, option) =>{
     return cookies.set(name, value, {...option})
 }
-
 //겟쿠키는 심플하다. 쿠키를 가져온다.
 export const getCookie = (name) => {
     return cookies.get(name)
