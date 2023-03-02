@@ -153,10 +153,6 @@ function Detail() {
     queryclient.invalidateQueries();
   }
   const CommentSubmitHandler = () => {
-    if(comment != null){
-      window.alert("댓글에 내용을 적어주세요.")
-    }
-    else{
       if (getCookie('wow') != null) {
         const data = {
           pam: pam.id,
@@ -172,7 +168,6 @@ function Detail() {
         navi("/login")
       }
     }
-  }
   
 
   const PutImageHandler = (event) =>{
