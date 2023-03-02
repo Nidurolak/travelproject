@@ -45,14 +45,13 @@ const mytextlist = async () => {
   console.log('mytextlist',error);
  }
 };
-
-
 const listfilter = async (data) => {
   console.log(data);
   const res = await instance.post("http://sparta-kdh.kro.kr/api/travel", data);
   console.log("post방식입니다")
   return res;
 };
+
 
 
 
