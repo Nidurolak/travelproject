@@ -52,11 +52,6 @@ function Login() {
       if(status == true){
         console.log(res.data.data.token)
         window.alert('로그인 성공!')
-<<<<<<< HEAD
-=======
-
-        
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
         const expires =  moment().add('60','m').toDate()
         setCookie("wow", res.data.data.token, {expires, path: "/", sameSite:"strict"})
         navi("/")

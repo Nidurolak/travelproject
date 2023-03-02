@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-<<<<<<< HEAD
-
-=======
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
 import { useMutation, useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { RandomList,mytextlist, listfilter } from "../api/Main";
@@ -18,10 +14,6 @@ const Main = () => {
   const [showMyItems, setShowMyItems] = useState(false);
   const token = getCookie("wow");
   const navi = useNavigate()
-<<<<<<< HEAD
-
-=======
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
   const imageUrl="https://www.gousa.or.kr/sites/default/files/styles/hero_l/public/2016-10/San%20Diego%2C%20California%20road.jpg?itok=5fqyXPma";
   
 
@@ -61,16 +53,9 @@ const Main = () => {
  
   const handleMyItems = () => {
     if (!token) {
-<<<<<<< HEAD
     alert("로그인이 필요합니다.");
     navi("/login")
   }
-=======
-      alert("로그인이 필요합니다.");
-      navi("/login")
-      return;
-      }
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
     setShowMyItems(true);
     lists.refetch();
   };
@@ -90,10 +75,6 @@ const Main = () => {
       </div>
     );
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
   return (
     <>
       <HeadBar/>

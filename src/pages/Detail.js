@@ -232,10 +232,6 @@ function Detail() {
 
   switch (data.data.budget) {
     case 1:
-<<<<<<< HEAD
-=======
-
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
       budgetCase = "30 만원 이하"
       break;
     case 2:
@@ -246,10 +242,6 @@ function Detail() {
       break;
     case 4:
       budgetCase = "70 만원 이상"
-<<<<<<< HEAD
-=======
-
->>>>>>> fd4377d8eef492a7c490535d0877fc5d6c02083e
       break;
     default:
       break;
