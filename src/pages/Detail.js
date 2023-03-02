@@ -230,6 +230,7 @@ function Detail() {
 
   switch (data.data.budget) {
     case 1:
+<<<<<<< HEAD
       budgetCase = "30 만원 이하"
       break;
     case 2:
@@ -240,6 +241,18 @@ function Detail() {
       break;
     case 4:
       budgetCase = "70 만원 이상"
+=======
+      budgetCase = "111111111"
+      break;
+    case 2:
+      budgetCase = "222222222"
+      break;
+    case 3:
+      budgetCase = "333333333"
+      break;
+    case 4:
+      budgetCase = "444444444"
+>>>>>>> CSS작업본
       break;
     default:
       break;

@@ -4,6 +4,7 @@ import { getCookie } from "../util/cookie";
 const RandomList = async () => {
   try {
     const res = await axios.get("http://sparta-kdh.kro.kr/api/travel");
+    console.log("get방식입니다")
     return res;
   } catch (e) {
     console.log("RandomList", e);
@@ -33,6 +34,8 @@ instance.interceptors.request.use(
   }
 );
 const token=getCookie('wow')
+
+
 const mytextlist = async () => {
  try{ const res = await axios.get(
     "http://sparta-kdh.kro.kr/api/travel/mylist",{headers:{Authorization:token} }
@@ -44,4 +47,13 @@ const mytextlist = async () => {
 };
 
 
-export { RandomList,mytextlist };
+const listfilter = async (data) => {
+  console.log(data);
+  const res = await instance.post("http://sparta-kdh.kro.kr/api/travel", data);
+  console.log("post방식입니다")
+  return res;
+};
+
+
+
+export { RandomList,mytextlist, listfilter };
