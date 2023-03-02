@@ -7,4 +7,5 @@ const instance = axios.create({
 	baseURL: "http://sparta-kdh.kro.kr/api/",
 });
 
+//배포는 AWS S3로 해야한다.
 export default instance;

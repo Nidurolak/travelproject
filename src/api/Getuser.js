@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "../util/cookie";
 
 const instance = axios.create({
-  baseURL: "http://sparta-kdh.kro.kr/api/travel",
+  baseURL: "http://sparta-kdh.kro.kr/api/user",
 })
 instance.interceptors.request.use(
   (config) => {
@@ -17,12 +17,12 @@ instance.interceptors.request.use(
   }
 );
 
-const makePost = async (data) => {
-  console.log(data)
-    const res = await instance.post("http://sparta-kdh.kro.kr/api/travel", data);
+const getUser = async (data) => {
+    const res = await instance.post("http://sparta-kdh.kro.kr/api/user", data);
+    console.log(res)
     return res;
   };
   
-  export { makePost };
+  export { getUser };
   
 
