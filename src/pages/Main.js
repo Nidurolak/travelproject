@@ -115,7 +115,7 @@ const Main = () => {
                   <ItemImage imageUrl={item.images} >
                   <div>💗:{item.likeCount}</div>
                     </ItemImage>
-                    <div>{item.title}</div>
+                    <ItemText>{item.title}</ItemText>
                 </Link>
               </Item>
             ))
@@ -200,7 +200,7 @@ const ButtonsWrapper = styled.div`
 
 const ItemsWrapper = styled.div`
 border-radius: 20px;
-  border: 3px solid rgb(110, 100, 255);
+  border: 10px solid skyblue;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -212,8 +212,10 @@ const Item = styled.div`
 
   width: 22%;
   height: 150px;
-  border: 3px solid rgb(110, 100, 255);
-  margin: 10px;
+  border: 10px solid rgb(110, 100, 255);
+  margin-top: 20px;
+  margin-right: 10px;
+  border-radius: 10px;
 `;
 
 const ItemImage = styled.div`
@@ -224,5 +226,13 @@ const ItemImage = styled.div`
   background-position: center;
   position: relative;
 `;
+
+const ItemText = styled.div`
+text-align: center;
+background-color: white;
+width:250px;
+border:3px solid skyblue;
+border-radius: 5px;
+`
 
 export default Main;
